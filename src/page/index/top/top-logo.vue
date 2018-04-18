@@ -1,8 +1,8 @@
 <template>
   <div class="pull-auto">
     <div class="logo">
-      <span class="logo_title is-bold">思特瑞管理平台</span>
-      <span class="logo_subtitle">这里放logo</span>
+      <span class="logo_subtitle"><img src="../../../assets/img/3xiaologo.png" alt=""></span>
+       <span class="logo_title is-bold">在线运维管理系统</span>
     </div>
   </div>
 </template>
@@ -23,15 +23,12 @@ export default {
 .logo {
   display: flex;
   align-items: center;
+  margin-left: 30px;
 }
 .logo_title {
-  padding: 0 8px 0 0;
-  color: #409eff;
-  font-size: 28px;
-  font-style: italic;
-  &.is-bold {
-    font-weight: 700;
-  }
+  padding: 0px 8px 0 20px;
+  color: white;
+  font-size: 18px;
 }
 .logo_subtitle {
   padding-top: 5px;

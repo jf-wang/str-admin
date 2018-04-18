@@ -43,10 +43,10 @@ export const asyncRouterMap = [
 	{path: '/404',component: errorPage404,name: '404'},
   {path: '/403',component: errorPage403,name: '403'},
   {path: '/500',component: errorPage500,name: '500'},
-  {path: '/',name: '主页',redirect: '/wel'},
+  {path: '/wel/index',name: '主页',redirect: '/wel'},
   {
-		path: '/wel',
-    component: Layout,
+		path: '/wel/index',
+    component: Layout, 
     redirect: '/wel/index',
     children: [{path: 'index',name: '首页',component: _import('wel')}]
   }, {
@@ -69,8 +69,21 @@ export const asyncRouterMap = [
     component: Layout,
     children: [
 			{path: 'user',name: '用户管理',component: _import('admin/user/index', 'views')},
-			{path: 'role',name: '角色管理',component: _import('admin/role/index', 'views')},
-			{path: 'menu',name: '菜单管理',component: _import('admin/menu/index', 'views')}
+			{path: 'role',name: '员工管理',component: _import('admin/role/index', 'views')},
+			{path: 'menu',name: '系统设定',component: _import('admin/menu/index', 'views')}
+		]
+  },{
+    path: '/transactionCenter',
+    component: Layout,
+    children: [
+			{path: 'messageCenter',name: '信息中心',component: _import('transactionCenter/messageCenter', 'views')},
+			{path: 'taskCentered',name: '任务中心',component: _import('transactionCenter/taskCentered', 'views')}
+		]
+  },{
+    path: '/counselor',
+    component: Layout,
+    children: [
+			{path: 'index',name: '咨询师',component: _import('counselor/index', 'views')}
 		]
   }
 ]

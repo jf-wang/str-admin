@@ -2,7 +2,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    background-color: #fff;
+    background-color: #363636;
     border-bottom:2px solid $menuBg;
     color: #333;
     box-sizing: border-box;
@@ -23,6 +23,8 @@
     font-size: inherit;
     font-weight: 400;
     flex: 1;
+    color: #cccccc;
+    text-align: center;
   }
  
   .header-userImg{
@@ -39,5 +41,13 @@
     align-items: center;
   }
   .header-button>.header-item{
-    margin-right: 12px;
+    margin-left: 30px;
+  }
+  .el-badge__content.is-fixed {
+    height: 10px;
+    line-height: 10px;
+    width: 15px;
+    padding: 0 6px 0 3px;
+    background-color:#b20000;
+    border: 0px;
   }

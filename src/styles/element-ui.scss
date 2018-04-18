@@ -7,10 +7,28 @@
     font-size: 12px;
     line-height: 28px;
 }
-.el-select,.el-date-editor.el-input, .el-date-editor.el-input__inner{
-    width: 100%;
-}
 .display,
 .display + .el-submenu__icon-arrow {
   display: none;
+}
+.el-input__inner, //输入框边框圆角2px
+.el-button {
+    border-radius: 2px;
+}
+.el-button--danger{//按钮
+    background-color: #b20000;
+    border: 0px;
+    width: 64px;
+    height: 32px;
+}
+.el-input__inner{//所有的输入框宽高限定
+    height: 32px;
+    width: 160px;
+}
+.messageCenter{
+     background: white;
+     min-height: 820px;
+     margin: 20px;
+     padding: 20px;
+
 }
