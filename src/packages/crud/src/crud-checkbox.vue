@@ -1,29 +1,20 @@
 <template>
-  <el-select v-model="text" :placeholder="'请选择'+placeholder" @change="handleChange" :disabled="disabled">
-    <el-option v-for="(item,index) in dic" :key="index" :label="item.label" :value="item.value">
-    </el-option>
-  </el-select>
+  <el-checkbox-group v-model="text" @change="handleChange">
+    <el-checkbox v-for="(item,index) in dic" :label="item.value" :key="index">{{item.label}}</el-checkbox>
+  </el-checkbox-group>
 </template>
 
 <script>
 export default {
-  name: "crud-select",
+  name: "AvueCrudCheckbox",
   data() {
     return {
-      text: ""
+      text: []
     };
   },
   props: {
     value: {
       default: ""
-    },
-    placeholder: {
-      type: String,
-      default: ""
-    },
-    disabled: {
-      type: Boolean,
-      default: false
     },
     dic: {
       default: () => {

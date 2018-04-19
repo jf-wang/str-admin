@@ -3,7 +3,8 @@ export default {
     index: true,
     selection: true,
     menuWidth: 300,
-    dic: ['GRADE', 'SEX'],
+    editBtn: false,
+    dic: ['GRADE', 'SEX', 'TYPE'],
     column: [
         {
             label: "用户名",
@@ -23,10 +24,16 @@ export default {
             formsolt: true,
         },
         {
+            label: "数字",
+            prop: "number",
+            type: 'number',
+            hide: true,
+        },
+        {
             label: "类型",
             prop: "type",
-            type: "select",
-            dicData: 'GRADE'
+            type: "cascader",
+            dicData: 'TYPE'
         },
         {
             label: "权限",
@@ -38,6 +45,9 @@ export default {
             label: "地址",
             prop: "address",
             width: "300",
+            type: 'textarea',
+            maxRow: 4,
+            minRow: 4,
             span: 24,
             disabled: true,
             addDisabled: false,

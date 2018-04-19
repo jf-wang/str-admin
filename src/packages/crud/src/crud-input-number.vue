@@ -1,12 +1,10 @@
 <template>
-  <el-radio-group v-model="text" @change="handleChange" :disabled="disabled">
-    <el-radio v-for="(item,index) in dic" :label="item.value" :key="index">{{item.label}}</el-radio>
-  </el-radio-group>
+  <el-input-number v-model="text" @change="handleChange" :min="minRows" :max="maxRows" :label="'请输入'+placeholder" :disabled="disabled"></el-input-number>
 </template>
 
 <script>
 export default {
-  name: "crud-radio",
+  name: "AvueCrudInputNumber",
   data() {
     return {
       text: ""
@@ -14,16 +12,27 @@ export default {
   },
   props: {
     value: {
-      default: ""
+      type: Number
     },
     disabled: {
       type: Boolean,
       default: false
     },
-    dic: {
-      default: () => {
-        return [];
-      }
+    placeholder: {
+      type: String,
+      default: ""
+    },
+    type: {
+      type: String,
+      default: ""
+    },
+    minRows: {
+      type: Number,
+      default: -Infinity
+    },
+    maxRows: {
+      type: Number,
+      default: Infinity
     }
   },
   watch: {

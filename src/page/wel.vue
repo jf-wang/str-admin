@@ -2,7 +2,7 @@
 	<div class="pull-chheight wel-contailer">
       <img :src="BG" alt="" class="banner-img" />
 			<div class="banner-text">
-				<h2>首页</h2>
+				<h2>Avue 通用管理系统快速开发框架</h2>
 				<span :class="['actor',{typeing:isText}]">{{text}}</span>
 			</div>
 	</div>

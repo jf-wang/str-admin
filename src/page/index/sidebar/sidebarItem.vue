@@ -15,57 +15,46 @@
             <i :class="child.icon"></i>
             <span slot="title">{{child.label}}</span>
           </el-menu-item>
-          <el-menu-item :index="filterPath(child.href,cindex)" @click="open(child)" v-else :key="cindex">
-            <i :class="child.icon"></i>
-            <span slot="title">{{child.label}}</span>
-          </el-menu-item>
-          <!-- <sidebar-item v-else :menu="[child]" :show="show" :key="cindex"></sidebar-item> -->
+          <sidebar-item v-else :menu="[child]" :show="show" :key="cindex"></sidebar-item>
         </template>
       </el-submenu>
     </template>
   </div>
 </template>
 <script>
-  import {
-    resolveUrlPath
-  } from "@/util/util";
-  export default {
-    name: "SidebarItem",
-    data() {
-      return {};
+import { resolveUrlPath } from "@/util/util";
+export default {
+  name: "SidebarItem",
+  data() {
+    return {};
+  },
+  props: {
+    menu: {
+      type: Array
     },
-    props: {
-      menu: {
-        type: Array
-      },
-      show: {
-        type: Boolean
-      }
-    },
-    created() {},
-    mounted() {},
-    methods: {
-      filterPath(path, index) {
-        return path == null ? index + "" : path;
-      },
-      open(item) {
-        if (item.children.length == 0) {
-          this.$router.push({
-            path: resolveUrlPath(item.href, item.label),
-            query: item.query
-          });
-        } else {
-          console.log(item.children)
-        }
-      }
+    show: {
+      type: Boolean
     }
-  };
-
+  },
+  created() {},
+  mounted() {},
+  methods: {
+    filterPath(path, index) {
+      return path == null ? index + "" : path;
+    },
+    open(item) {
+      this.$router.push({
+        path: resolveUrlPath(item.href, item.label),
+        query: item.query
+      });
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
-  .display,
-  .display+.el-submenu__icon-arrow {
-    display: none;
-  }
-
+.display,
+.display + .el-submenu__icon-arrow {
+  display: none;
+}
 </style>
+

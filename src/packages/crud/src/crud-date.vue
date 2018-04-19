@@ -1,10 +1,10 @@
 <template>
-  <el-input v-model="text" :placeholder="'请输入'+placeholder" @change="handleChange" :disabled="disabled"></el-input>
+  <el-date-picker v-model="text" type="date" :placeholder="'请输入'+placeholder" @change="handleChange" :disabled="disabled"> </el-date-picker>
 </template>
 
 <script>
 export default {
-  name: "crud-input",
+  name: "AvueCrudDate",
   data() {
     return {
       text: ""
@@ -12,7 +12,6 @@ export default {
   },
   props: {
     value: {
-      type: String,
       default: ""
     },
     disabled: {

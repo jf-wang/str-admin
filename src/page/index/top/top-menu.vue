@@ -25,6 +25,11 @@ export default {
         {
           label: "设置",
           parentId: 1
+        },
+        {
+          label: "文档",
+          href: "https://www.kancloud.cn/smallwei/avue/",
+          parentId: 3
         }
       ]
     };
@@ -38,7 +43,6 @@ export default {
       this.$store.dispatch("GetMenu", item.parentId).then(data => {
         let itemActive,
           childItemActive = 0;
-        this.$store.commit("DEL_ALL_TAG");
         if (item.href) {
           itemActive = item;
         } else {
@@ -59,7 +63,6 @@ export default {
 
 <style scoped="scoped" lang="scss">
 .top-menu {
-  padding: 0 50px;
   margin-top: -4px;
   box-sizing: border-box;
 }

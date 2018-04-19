@@ -14,6 +14,7 @@ export const setPx = (val, defval) => {
     if (validatenull(val)) {
         val = defval;
     }
+    val = val + '';
     if (val.indexOf('%') == -1) {
         val = val + 'px';
     }
@@ -58,7 +59,7 @@ export const encryption = (params) => {
  * 设置浏览器头部标题
  */
 export const setTitle = function (title) {
-    title = title ? `${title}——思特瑞管理平台` : '思特瑞管理平台';
+    title = title ? `${title}——Avue 通用管理 系统快速开发框架` : 'Avue 通用管理 系统快速开发框架';
     window.document.title = title;
 };
 /**
