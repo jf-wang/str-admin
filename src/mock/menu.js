@@ -49,27 +49,27 @@ const first = [
       label: "系统设定",
       href: '/admin/menu',
       icon: 'icon-caidanguanli',
-      // children: []
-      children: [{
-        id: 231,
-        label: "用户管理",
-        href: '/admin/user',
-        icon: 'icon-yonghuguanli',
-        children: []
-      }, {
-        id: 232,
-        label: "员工管理",
-        href: '/admin/role',
-        icon: 'icon-jiaoseguanli',
-        children: []
-      },
-      {
-        id: 233,
-        label: "菜单管理",
-        href: '/admin/menu',
-        icon: 'icon-caidanguanli',
-        children: []
-      }]
+      children: []
+      // children: [{
+      //   id: 231,
+      //   label: "用户管理",
+      //   href: '/admin/user',
+      //   icon: 'icon-yonghuguanli',
+      //   children: []
+      // }, {
+      //   id: 232,
+      //   label: "员工管理",
+      //   href: '/admin/role',
+      //   icon: 'icon-jiaoseguanli',
+      //   children: []
+      // },
+      // {
+      //   id: 233,
+      //   label: "菜单管理",
+      //   href: '/admin/menu',
+      //   icon: 'icon-caidanguanli',
+      //   children: []
+      // }]
     }, {
       id: 31,
       label: "用户管理",

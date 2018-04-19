@@ -38,7 +38,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" >
   .login-container {
     display: flex;
     align-items: center;
@@ -140,4 +140,5 @@
   .el-form-item__error {
     left: 60px;
   }
+
 </style>
