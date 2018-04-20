@@ -11,8 +11,6 @@
       <el-row>
         <el-col :span="16">
           <div class="search-form">
-            <!--搜索栏-->
-            <!-- <el-card class="box-card"> -->
             <el-form :model="listQuery" ref="listQuery" label-position="left" label-width="60px">
               <el-form-item style="margin:0 0 0 -60px">
                 <el-col :span="6">
@@ -31,7 +29,7 @@
                 <el-col :span="2" :offset="1">
                   <el-form-item>
                     <el-form-item>
-                      <el-button type="danger">查询</el-button>
+                      <el-button type="danger" @click="search">查询</el-button>
                     </el-form-item>
                   </el-form-item>
                 </el-col>
@@ -64,10 +62,8 @@
                 </el-form-item>
               </transition>
             </el-form>
-            <!-- </el-card> -->
-            <!-- <el-card class="box-card" style="margin-top:10px"> -->
-            <el-button type="danger" icon="el-icon-circle-plus-outline" style="margin:10px 0" @click="dialogFormVisible=true">新增</el-button>
-            <el-table :data="tableData" style="width: 100%" v-loading="listLoading" max-height="650" size="mini" @row-click="handleSelectionChange">
+            <el-button type="danger" icon="el-icon-circle-plus-outline" style="margin:10px 0" @click="addNews">新增</el-button>
+            <el-table :data="tableData" style="width: 100%" v-loading="listLoading" max-height="650" highlight-current-row size="mini" @row-click="handleSelectionChange">
               <el-table-column prop="section" label="部门" align="center">
               </el-table-column>
               <el-table-column prop="name" label="姓名" align="center">
@@ -84,10 +80,9 @@
               </el-table-column>
             </el-table>
             <div style="float:right">共{{tableData.length}}条</div>
-            <!-- </el-card> -->
           </div>
         </el-col>
-        <el-dialog title="新增员工" :visible.sync="dialogFormVisible" width="42%">
+        <el-dialog :title="dialogFormVisibleTitle" :visible.sync="dialogFormVisible" width="42%">
           <el-form :model="dialogForm" :rules="rules" label-width="100px" ref="dialogForm">
             <el-form-item label="姓名" prop="name">
               <el-input v-model="dialogForm.name" placeholder="请输入姓名" size="small" style="width:32.7%"></el-input>
@@ -121,8 +116,8 @@
             <el-form-item label="身份证号">
               <el-input v-model="dialogForm.IDNumber" placeholder="请输入身份证号" size="small" style="width:32.7%"></el-input>
             </el-form-item>
-             <el-form-item label="性别">
-             <el-select v-model="dialogForm.gender" placeholder="请选择职务" size="small">
+            <el-form-item label="性别">
+              <el-select v-model="dialogForm.gender" placeholder="请选择职务" size="small">
                 <el-option v-for="item in genderLists" :key="item.key" :label="item.label" :value="item.key">
                 </el-option>
               </el-select>
@@ -133,7 +128,7 @@
             <el-form-item label="座机">
               <el-input v-model="dialogForm.specialPane" placeholder="请输入座机号码" size="small" style="width:32.7%"></el-input>
             </el-form-item>
-            <el-form-item label="手机" prop="phone">
+            <el-form-item label="手机">
               <el-input v-model="dialogForm.phone" placeholder="请输入手机号码" size="small" style="width:32.7%"></el-input>
             </el-form-item>
             <el-form-item label="Email">
@@ -143,17 +138,17 @@
               <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入备注内容" v-model="dialogForm.remark"></el-input>
             </el-form-item>
             <el-form-item label="默认模块">
-              
-            </el-form-item>
-            <el-form-item >
-              <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="submitForm('dialogForm')">确 定</el-button>
+              <el-cascader v-model="dialogForm.default" :options="getoptionsList" change-on-select></el-cascader>
             </el-form-item>
           </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button type="info" @click="resetForm('dialogForm')">清 空</el-button>
+            <el-button type="danger" @click="submitForm('dialogForm')">确 定</el-button>
+          </div>
         </el-dialog>
         <el-col :span="8">
           <div class="search_right">
-
+           <messag-form :logo="messageForm"></messag-form>
           </div>
         </el-col>
       </el-row>
@@ -163,10 +158,9 @@
 </template>
 
 <script>
-  import {
-    getrololists
-  } from '@/api/admin'
-    import { name ,loginName,select,phone} from '@/views/admin/role/roleFrom'
+  import {getrololists,getoptionsLists} from '@/api/admin'
+  import {name,loginName,select,phone} from '@/views/admin/role/roleFrom'
+  import messagForm from "./messagForm";
   export default {
     name: "role",
     data() {
@@ -203,41 +197,24 @@
         ]
       return {
         condition: true, //展开收起状态
-        listQuery: { //搜索框表单
-          name: "", //姓名
-          type: "", //状态
-          loginName: "", //登录名
-          section: "" //部门
-        },
-        dialogForm: {
-          name: '', //名字
-          loginName: '', //登录名
-          section: "", //部门
-          duty:"",//职务
-          dialogImageUrl: "", //照片
-          record: "", //履历
-          IDNumber: "", //身份证号
-          gender:"",//性别
-          establishedTime: "", //出生日期
-          specialPane:"",//座机
-          phone:"",//手机号码
-          Email:"",//邮箱地址
-          remark:"",//备注
-        },
-        rules:{
-           name: [{ required: true, trigger: 'blur', validator: name }],
-           loginName: [{ required: true, trigger: 'blur', validator: loginName }],
-           section: [{ required: true, trigger: 'change', validator: select }],
-           duty: [{ required: true, trigger: 'change', validator: select }],
-           phone: [{ required: true, trigger: 'blur', validator: phone }]
+        listQuery: {},
+        dialogForm: {},
+        messageForm:{},
+        rules: {
+          name: [{required: true,trigger: 'blur',validator: name}],
+          loginName: [{required: true,trigger: 'blur',validator: loginName}],
+          section: [{required: true,trigger: 'change',validator: select}],
+          duty: [{required: true,trigger: 'change',validator: select}]
         },
         options, //状态下拉框数组
         sectionLists, //部门下拉框数组
-        genderLists,//性别
-        dutyLists,//职务
+        genderLists, //性别
+        dutyLists, //职务
         listLoading: false, //表格loading
         tableData: [],
         dialogFormVisible: false,
+        getoptionsList: [], //默认模块列表\
+        dialogFormVisibleTitle: "新增员工", //模态框title
       };
     },
     created() {
@@ -246,44 +223,88 @@
     watch: {},
     mounted() {},
     computed: {
-
+     
     },
     props: [],
     methods: {
       changeState() { //展开收起
         this.condition = !this.condition
       },
+      search() { //查询
+        this.listLoading = true
+        setTimeout(() => {
+          this.listLoading = false
+        }, 2000);
+      },
       handleClick(row) { //表单中的编辑
         console.log(row);
+        this.dialogFormVisible = true;
+        this.dialogFormVisibleTitle = "修改员工";
+        this.getoptionsLists()
       },
       deleteRow(row) { //表单中的删除
         console.log(row);
+        this.$confirm('此操作将删除员工, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       },
       handleSelectionChange(row) { //当某一行被点击时会触发该事件
-        console.log(row);
+        this.messageForm=row
       },
-      getList() {
+      getList() { //请求列表数据
         this.listLoading = true;
         getrololists().then(res => {
           this.listLoading = false;
           this.tableData = res.data.tableData
         })
       },
-      handleRemove(file, fileList) {
+      handleRemove(file, fileList) { //照片删除时间
         console.log(file, fileList);
       },
-       submitForm(formName) {
+      submitForm(formName) { //提交新增表单
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
+            if(this.dialogFormVisibleTitle=="新增员工"){
+              console.log("新增员工")
+            }else{
+              console.log("修改员工")
+            }
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       },
+      resetForm(formName) { //清空新增表单
+        this.$refs[formName].resetFields();
+      },
+      getoptionsLists() { //获取模态框中默认模块
+        getoptionsLists().then(res => {
+          this.getoptionsList = res.data.optionsLists
+        })
+      },
+      addNews() { //点击新增的时候
+        this.dialogFormVisible = true;
+        this.dialogFormVisibleTitle = "新增员工";
+        this.getoptionsLists()
+      },
     },
-    components: {}
+    components: {
+      messagForm
+    }
   };
 
 </script>
@@ -306,5 +327,14 @@
     width: 160px;
     height: 30px;
   }
-
+  .employeeDetailed{
+    border-bottom: 1px solid #dddddd;
+    color: #363636;
+    &>span{
+      border-bottom: 2px solid #b20000;
+      display: inline-block;
+    }
+  }
+  
+  
 </style>

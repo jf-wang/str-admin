@@ -1,58 +1,22 @@
-.el-dropdown-menu__item {
-  font-size: 12px;
-  line-height: 28px;
-}
-
-.display,
-.display+.el-submenu__icon-arrow {
-  display: none;
-}
-
-.el-input__inner, //输入框边框圆角2px
-.el-button {
-  border-radius: 2px;
-}
-
-.el-button--danger {
-  //按钮
-  background-color: #b20000;
-  border: 0px;
-  width: 64px;
-  height: 32px;
-  padding: 0;
-}
-
-.messageCenter {
-  min-height: 820px;
-  margin: 20px 0 20px 10px;
-}
-
-.el-form--label-left .el-form-item__label {
-  text-align: right;
-}
-
-.el-tooltip__popper.is-light {//提示自定义颜色
-  border: 1px solid #cccccc ;
-  padding: 5px;
-  color: #999999;
-}
-.el-table--enable-row-transition .el-table__body td{//设置表格高度
-  height: 40px;
-}
-.el-table--mini td{//表格padding设为0
-  padding: 0;
-}
-.el-dialog__header{//弹出框头部样式
-  background: #eeeeee;
-  padding: 10px 20px;
-}
-.el-form-item{
-  margin-bottom: 10px;
-}
-.el-dialog__body{//弹出框body
-  max-height: 400px;
-  overflow: scroll;
-}
-.el-form-item__error{
-  padding-top: 0px;
-}
+.el-dropdown-menu__item {font-size: 12px;line-height: 28px;}
+.display,.display+.el-submenu__icon-arrow {display: none;}
+.el-input__inner, .el-button {border-radius: 2px;}//输入框边框圆角2px
+.el-button--danger {background-color: #b20000;border: 0px;width: 64px;height: 32px;padding: 0;}//红色按钮
+.el-button--info {border: 0px;width: 64px;height: 32px;padding: 0;}//灰色按钮
+.messageCenter {min-height: 820px;margin: 20px 0 20px 10px;}
+.el-form--label-left .el-form-item__label {text-align: right;}
+.el-tooltip__popper.is-light {border: 1px solid #cccccc;padding: 5px;color: #999999;}//提示自定义颜色
+.el-table--enable-row-transition .el-table__body td {height: 40px;}//设置表格高度
+.el-table--mini td {padding: 0;} //表格padding设为0
+.el-form-item {margin-bottom: 10px;}
+.el-dialog__header {background: #eeeeee;padding: 10px 20px;} //模态框头部样式
+.el-dialog__title{line-height: 32px;}//模态框标题
+.el-dialog__body {max-height: 510px;overflow: scroll;padding: 20px} //模态框body
+.el-dialog__footer {border-top: 1px solid #dddddd;padding: 10px 20px;}//模态框尾部
+.el-dialog__headerbtn{top: 10px;right: 10px;font-size: 30px;}//模态框关闭x
+.el-form-item__error {padding-top: 0px;}
+.el-table__body tr.current-row>td {background-color:#fdf4f3;}
+.has-gutter .is-leaf{background: #f1f1f1;}
+.el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label{font-size: 15px}
+.el-transfer__button:first-child,.el-transfer__button:nth-child(2){width: 64px;height: 32px; padding: 8px}
+.el-transfer__button.is-with-texts{border-radius: 2px;}

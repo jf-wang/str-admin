@@ -16,7 +16,7 @@
 	outline: none;
 }*/
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
+    font-weight: 400;
 }
 @include scrollBar();
 body,
@@ -48,8 +48,8 @@ td {
 body {
 	min-width: 1200px;
 	color: #333;
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Microsoft YaHei";
-	line-height: 2;
+  font-family: "Microsoft YaHei";
+	font-size: 14px;
 }
 
 html,
