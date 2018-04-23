@@ -22,7 +22,7 @@ export default {
     },
     goHome() {
       this.$router.push({
-        name: "/"
+        name: "/wel/index"
       });
     }
   }

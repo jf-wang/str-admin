@@ -62,7 +62,7 @@
                 </el-form-item>
               </transition>
             </el-form>
-            <el-button type="danger" icon="el-icon-circle-plus-outline" style="margin:10px 0" @click="addNews">新增</el-button>
+            <el-button type="danger" icon="el-icon-circle-plus-outline" style="margin:10px 0" @click="addNews(dialogForm)">新增</el-button>
             <el-table :data="tableData" style="width: 100%" v-loading="listLoading" max-height="650" highlight-current-row size="mini" @row-click="handleSelectionChange">
               <el-table-column prop="section" label="部门" align="center">
               </el-table-column>
@@ -239,6 +239,20 @@
       handleClick(row) { //表单中的编辑
         console.log(row);
         this.dialogFormVisible = true;
+        this.dialogForm.name='',
+        this.dialogForm.loginName='',
+        this.dialogForm.section='',
+        this.dialogForm.duty='',
+        this.dialogForm.dialogImageUrl='',
+        this.dialogForm.record='',
+        this.dialogForm.IDNumber='',
+        this.dialogForm.gender='',
+        this.dialogForm.establishedTime='',
+        this.dialogForm.specialPane='',
+        this.dialogForm.phone='',
+        this.dialogForm.Email='',
+        this.dialogForm.remark='',
+        this.dialogForm.default=[];
         this.dialogFormVisibleTitle = "修改员工";
         this.getoptionsLists()
       },
@@ -296,8 +310,23 @@
           this.getoptionsList = res.data.optionsLists
         })
       },
-      addNews() { //点击新增的时候
+      addNews(dialogForm) { //点击新增的时候
         this.dialogFormVisible = true;
+        this.dialogForm={}
+        this.dialogForm.name='',
+        this.dialogForm.loginName='',
+        this.dialogForm.section='',
+        this.dialogForm.duty='',
+        this.dialogForm.dialogImageUrl=[],
+        this.dialogForm.record='',
+        this.dialogForm.IDNumber='',
+        this.dialogForm.gender='',
+        this.dialogForm.establishedTime='',
+        this.dialogForm.specialPane='',
+        this.dialogForm.phone='',
+        this.dialogForm.Email='',
+        this.dialogForm.remark='',
+        this.dialogForm.default=[];
         this.dialogFormVisibleTitle = "新增员工";
         this.getoptionsLists()
       },
