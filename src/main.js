@@ -6,6 +6,7 @@ import './permission' // 权限
 import './errorLog' // 错误日志
 import router from './router/router';
 import store from './store';
+import '../theme/index.css'
 import ELEMENT from 'element-ui';
 import { loadStyle } from './util/util'
 import * as urls from '@/config/env';

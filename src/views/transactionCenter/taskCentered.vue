@@ -31,14 +31,9 @@
                     <el-button type="danger" @click="search">查询</el-button>
                   </el-form-item>
                 </el-col>
-                 <el-col :span="2" >
-                  <el-form-item>
-                    <el-button type="danger" @click="empty">全部</el-button>
-                  </el-form-item>
-                </el-col>
                 <el-col :span="2">
                   <el-form-item>
-                    <el-button type="text" v-if="condition" @click="changeState">收起
+                    <el-button type="text" v-if="condition" @click="changeState" >收起
                       <i class="el-icon-arrow-up el-icon--right"></i>
                     </el-button>
                     <el-button type="text" v-else @click="changeState">展开

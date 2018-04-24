@@ -62,7 +62,7 @@
                 </el-form-item>
               </transition>
             </el-form>
-            <el-button type="danger" icon="el-icon-circle-plus-outline" style="margin:10px 0" @click="addNews(dialogForm)">新增</el-button>
+            <el-button type="text" icon="el-icon-circle-plus-outline" style="margin:10px 0;color:#409EFF" @click="addNews(dialogForm)">新增</el-button>
             <el-table :data="tableData" style="width: 100%" v-loading="listLoading" max-height="650" highlight-current-row size="mini" @row-click="handleSelectionChange">
               <el-table-column prop="section" label="部门" align="center">
               </el-table-column>

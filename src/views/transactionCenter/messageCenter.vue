@@ -28,7 +28,7 @@
                 </el-col>
                  <el-col :span="2" >
                   <el-form-item>
-                    <el-button type="danger" @click="empty">清空</el-button>
+                    <el-button type="danger" @click="empty" style="background:#e67f05">清空</el-button>
                   </el-form-item>
                 </el-col>
                 <el-col :span="2">
@@ -51,7 +51,7 @@
                   </el-col>
                   <el-col :span="5" >
                     <el-form-item label="类别:">
-                       <el-cascader expand-trigger="hover" :options="categorylists" v-model="listQuery.category"></el-cascader>
+                       <el-cascader expand-trigger="hover" size="small" :options="categorylists" v-model="listQuery.category"></el-cascader>
                     </el-form-item>
                   </el-col>
                   <el-col :span="11" :offset="1">
@@ -65,7 +65,7 @@
                 </el-form-item>
               </transition>
             </el-form>
-            <el-button type="danger" icon="el-icon-circle-plus-outline" style="margin:10px 0;width:100px" @click="addNews">发送消息</el-button>
+            <el-button type="text" icon="el-icon-circle-plus-outline" style="margin:10px 0;width:100px" @click="addNews">发送消息</el-button>
             <el-table :data="tableData" style="width: 100%" v-loading="listLoading" max-height="650" highlight-current-row size="mini"
               @row-click="handleSelectionChange">
               <el-table-column prop="time" label="发送时间" align="center" sortable>
