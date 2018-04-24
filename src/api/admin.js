@@ -6,7 +6,7 @@ export const getUserData = (page) => {
   return new Promise((resolve, reject) => {
     resolve({
       data: userTableData
-    });
+    }); 
   })
 }
 

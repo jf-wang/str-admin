@@ -1,11 +1,11 @@
 <template>
-	<div class="pull-chheight wel-contailer">
-      <img :src="BG" alt="" class="banner-img" />
-			<div class="banner-text">
-				<h2>Avue 通用管理系统快速开发框架</h2>
-				<span :class="['actor',{typeing:isText}]">{{text}}</span>
-			</div>
-	</div>
+  <div class="pull-chheight wel-contailer">
+    <img :src="BG" alt="" class="banner-img" />
+    <div class="banner-text">
+      <h2>思特瑞-在线运维管理系统</h2>
+      <span :class="['actor',{typeing:isText}]">{{text}}</span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       DATA: DATA,
-      BG:BG,
+      BG: BG,
       text: "",
       actor: "",
       count: 0,
@@ -56,7 +56,7 @@ export default {
           }
           if (active) {
             num--;
-            this.text = this.actor.substr(0, num);
+            this.text = "问候语2";
             if (num == 0) {
               this.isText = false;
               setTimeout(() => {
@@ -66,7 +66,7 @@ export default {
             }
           } else {
             num++;
-            this.text = this.actor.substr(0, num);
+            this.text = "问候语1";
             if (num == this.actor.length) {
               this.isText = false;
               setTimeout(() => {
@@ -83,7 +83,7 @@ export default {
 </script>
 
 <style scoped="scoped" lang="scss">
-.wel-contailer{
+.wel-contailer {
   position: relative;
 }
 .banner-text {
@@ -93,9 +93,9 @@ export default {
   text-align: center;
   color: #333;
 }
-.banner-img{
+.banner-img {
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;

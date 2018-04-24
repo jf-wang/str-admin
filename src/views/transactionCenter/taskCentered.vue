@@ -181,7 +181,7 @@
     {value: '2-5',label: '其他'}
   ]
   const statesKeyValue = statesOptions.reduce((acc, cur) => {
-    acc[cur.key] = cur.label
+    acc[cur.key] = cur.label 
     return acc
   }, {})
   const sectionsKeyValue= sectionsOptions.reduce((acc, cur) => {

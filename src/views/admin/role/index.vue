@@ -235,24 +235,11 @@
         setTimeout(() => {
           this.listLoading = false
         }, 2000);
-      },
+      }, 
       handleClick(row) { //表单中的编辑
         console.log(row);
         this.dialogFormVisible = true;
-        this.dialogForm.name='',
-        this.dialogForm.loginName='',
-        this.dialogForm.section='',
-        this.dialogForm.duty='',
-        this.dialogForm.dialogImageUrl='',
-        this.dialogForm.record='',
-        this.dialogForm.IDNumber='',
-        this.dialogForm.gender='',
-        this.dialogForm.establishedTime='',
-        this.dialogForm.specialPane='',
-        this.dialogForm.phone='',
-        this.dialogForm.Email='',
-        this.dialogForm.remark='',
-        this.dialogForm.default=[];
+        this.$refs['dialogForm'].resetFields()
         this.dialogFormVisibleTitle = "修改员工";
         this.getoptionsLists()
       },
@@ -312,21 +299,7 @@
       },
       addNews(dialogForm) { //点击新增的时候
         this.dialogFormVisible = true;
-        this.dialogForm={}
-        this.dialogForm.name='',
-        this.dialogForm.loginName='',
-        this.dialogForm.section='',
-        this.dialogForm.duty='',
-        this.dialogForm.dialogImageUrl=[],
-        this.dialogForm.record='',
-        this.dialogForm.IDNumber='',
-        this.dialogForm.gender='',
-        this.dialogForm.establishedTime='',
-        this.dialogForm.specialPane='',
-        this.dialogForm.phone='',
-        this.dialogForm.Email='',
-        this.dialogForm.remark='',
-        this.dialogForm.default=[];
+        this.$refs['dialogForm'].resetFields()
         this.dialogFormVisibleTitle = "新增员工";
         this.getoptionsLists()
       },

@@ -45,39 +45,38 @@ const first = [
     href: '/exhibition/index',
     icon: 'icon-shujuzhanshi2',
     children: [{
-      id: 33,
+      id: 31,
       label: "系统设定",
       href: '/admin/menu',
       icon: 'icon-caidanguanli',
-      children: []
-      // children: [{
-      //   id: 231,
-      //   label: "用户管理",
-      //   href: '/admin/user',
-      //   icon: 'icon-yonghuguanli',
-      //   children: []
-      // }, {
-      //   id: 232,
-      //   label: "员工管理",
-      //   href: '/admin/role',
-      //   icon: 'icon-jiaoseguanli',
-      //   children: []
-      // },
-      // {
-      //   id: 233,
-      //   label: "菜单管理",
-      //   href: '/admin/menu',
-      //   icon: 'icon-caidanguanli',
-      //   children: []
-      // }]
+      children: [{
+        id: 311,
+        label: "业务选项配置",
+        href: '/admin/serviceOption',
+        icon: 'icon-yonghuguanli',
+        children: []
+      }, {
+        id: 312,
+        label: "角色配置",
+        href: '/admin/userRole',
+        icon: 'icon-jiaoseguanli',
+        children: []
+      },
+      {
+        id: 313,
+        label: "数据字典管理",
+        href: '/admin/bdd',
+        icon: 'icon-caidanguanli',
+        children: []
+      }]
     }, {
-      id: 31,
+      id: 32,
       label: "用户管理",
       href: '/admin/user',
       icon: 'icon-yonghuguanli',
       children: []
     }, {
-      id: 32,
+      id: 33,
       label: "员工管理",
       href: '/admin/role',
       icon: 'icon-jiaoseguanli',

@@ -14,9 +14,9 @@ export function select(rule, value, callback) { // 下拉框
 }
 export function staff(rule, value, callback) { // 姓名
   const regFormat = /^[\u4E00-\u9FA5A-Za-z ]+$/ // 正确 姓名
-   if (!value) {
+  if (!value) {
     callback(new Error('请输入员工姓名'))
-   }else if (!regFormat.test(value)) {
+  } else if (!regFormat.test(value)) {
     callback(new Error('只允许中文或英文'))
   } else {
     callback()
@@ -42,9 +42,9 @@ export function headline(rule, value, callback) { // 姓名
 }
 export function loginName(rule, value, callback) { // 登录名
   const regFormat = /^[\u4E00-\u9FA5A-Za-z ]+$/ // 正确 姓名
-   if (!value) {
+  if (!value) {
     callback(new Error('请输入登录名'))
-   }else if (!regFormat.test(value)) {
+  } else if (!regFormat.test(value)) {
     callback(new Error('只允许中文或英文'))
   } else {
     callback()

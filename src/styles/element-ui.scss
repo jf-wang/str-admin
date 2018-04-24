@@ -1,7 +1,7 @@
 .el-dropdown-menu__item {font-size: 12px;line-height: 28px;}
 .display,.display+.el-submenu__icon-arrow {display: none;}
 .el-input__inner, .el-button {border-radius: 2px}//输入框边框圆角2px
-.el-button--danger {background-color: #b20000;border: 0px;width: 64px;height: 32px;padding: 0;}//红色按钮
+.el-button--danger {background-color: $theme;border: 0px;width: 64px;height: 32px;padding: 0;}//红色按钮
 .el-button--info {border: 0px;width: 64px;height: 32px;padding: 0;}//灰色按钮
 .messageCenter {min-height: 820px;margin: 20px 0 20px 10px;}
 .el-form--label-left .el-form-item__label {text-align: right;}
@@ -20,3 +20,5 @@
 .el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label{font-size: 15px}
 .el-transfer__button:first-child,.el-transfer__button:nth-child(2){width: 64px;height: 32px; padding: 8px}
 .el-transfer__button.is-with-texts{border-radius: 2px;}
+.el-pager li.active{color: $theme;}//分页样式
+.el-pager li:hover{color: $theme;}//分页hover样式
