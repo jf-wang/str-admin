@@ -42,7 +42,8 @@ export const asyncRouterMap = [
 			{ path: 'menu', name: '系统设定', component: _import('admin/menu/index', 'views') },
 			{ path: 'bdd', name: '数据字典管理', component: _import('admin/menu/bdd', 'views') },
 			{ path: 'userRole', name: '角色配置', component: _import('admin/menu/userRole', 'views') },
-			{ path: 'serviceOption', name: '业务选项配置', component: _import('admin/menu/serviceOption', 'views') }
+			{ path: 'serviceOption', name: '业务选项配置', component: _import('admin/menu/serviceOption', 'views') },
+			{ path: 'demo', name: '测试页', component: _import('admin/demo', 'views') }
 		]
 	}, {
 		path: '/transactionCenter',

@@ -81,6 +81,12 @@ const first = [
       href: '/admin/role',
       icon: 'icon-jiaoseguanli',
       children: []
+    }, {
+      id: 34,
+      label: "测试页",
+      href: '/admin/demo',
+      icon: 'icon-jiaoseguanli',
+      children: []
     }],
   }
 

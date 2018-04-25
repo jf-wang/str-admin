@@ -20,6 +20,5 @@
 .el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label{font-size: 15px}
 .el-transfer__button:first-child,.el-transfer__button:nth-child(2){width: 64px;height: 32px; padding: 8px}
 .el-transfer__button.is-with-texts{border-radius: 2px;}
-.el-pager li.active{color: $theme;}//分页样式
-.el-pager li:hover{color: $theme;}//分页hover样式
 .el-button--text{color: #409EFF}//文字按钮样式
+.el-tree-node:focus > .el-tree-node__content{background:#fdf4f3;}

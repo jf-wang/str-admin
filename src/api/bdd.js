@@ -9,3 +9,9 @@ export function itemSetLists() { //ItemSet下的列表
   })
 }
 
+export function treeLists() { //树的列表
+  return fetch({
+    url: '/tree/lists',
+    method: 'get'
+  })
+}

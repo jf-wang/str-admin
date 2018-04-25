@@ -225,6 +225,9 @@
     computed: {
      
     },
+    components: {
+      messagForm
+    },
     props: [],
     methods: {
       changeState() { //展开收起
@@ -303,9 +306,6 @@
         this.dialogFormVisibleTitle = "新增员工";
         this.getoptionsLists()
       },
-    },
-    components: {
-      messagForm
     }
   };
 
