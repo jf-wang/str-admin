@@ -211,7 +211,7 @@
         {key: '2',label: '女'},
         ]
       return {
-          options5: [{
+        options5: [{
           value: 'HTML',
           label: 'HTML'
         }, {

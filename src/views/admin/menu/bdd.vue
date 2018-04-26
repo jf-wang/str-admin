@@ -27,13 +27,11 @@
           </el-row>
           <el-table :data="setKeyTableData" style="width: 100%" v-loading="setKeylistLoading" max-height="650" highlight-current-row
             size="mini" @row-click="setKeyHandleChange" height="290">
-            <el-table-column prop="KeyId" label="Key" align="center">
+            <el-table-column prop="setKey" label="Key" align="center">
             </el-table-column>
-            <el-table-column prop="duty" label="状态" align="center">
-            </el-table-column>
-            <el-table-column prop="cache" label="缓存类型" align="center">
-            </el-table-column>
-            <el-table-column prop="title" label="标题" align="center">
+            <bdd-SetStatus :prop="setKeyTableData.setStatus" :bddItem='bdd_item.setStatus' :label='label.setStatus'></bdd-SetStatus>
+            <bdd-SetStatus :prop="setKeyTableData.cacheType" :bddItem='bdd_item.cacheType' :label='label.cacheType'></bdd-SetStatus>
+            <el-table-column prop="setTitle" label="标题" align="center">
             </el-table-column>
             <el-table-column label="操作" align="center">
               <template slot-scope="scope">
@@ -93,7 +91,7 @@
         <el-col :span="13">
           <h2>SubItem管理</h2>
           <div style="overflow:hidden">
-            <el-button style="color:#e67f05;float:right" size="mini" title="新增顶层SubItem" icon="el-icon-circle-plus-outline" @click="addNews">新增顶层SubItem</el-button>
+            <el-button type="text" style="float:right" size="mini" title="新增顶层SubItem" icon="el-icon-circle-plus-outline" @click="addNews">新增顶层SubItem</el-button>
           </div>
           <el-tree :data="SubItemTree" @node-click="nodeClick" node-key="id" default-expand-all :expand-on-click-node="false" draggable>
             <span class="custom-tree-node" slot-scope="{ node, data }">
@@ -138,16 +136,14 @@
 <script>
   import {itemSetLists,treeLists} from "@/api/bdd";
   import { setKeydialogs,topItemdialogs, subItem,subItemParticulars} from "./components";
-  import { PageItem } from '@/views/view-component'
+  import { PageItem ,bddSetStatus} from '@/views/view-component'
   export default {
     name: "bdd",
     data() {
       return {
         setKey: "", //---------------------------------------------------setKey的搜索内容
         setKeyTableData: [], //setKey的表格
-        setKeylistQuery: {
-          setKeycurrentPage: 1, //setKey的当前页
-        },
+        setKeylistQuery: {},
         setKeyTotal: 40, //setKey的总页数
         setKeylistLoading: false, //setKey的loading
         visible: {
@@ -162,9 +158,7 @@
         topItemTitle: "", //TopItem的搜索标题
         topItemTableData: [], //setKey的表格
         topItemlistLoading: false,
-        topItemlistQuery: {
-          topItemcurrentPage: 1, //topItem的当前页
-        },
+        topItemlistQuery: {},
         topItemTotal: 40, //topItem的总页数
         topItemTitle: "新增", //topItem模态框里的Title
         topItemruleForm: {},
@@ -174,7 +168,15 @@
         nodeNuber: null,
         selectNuber: null,
         shiftType: "", //移动方式
-        particularsForm: {}
+        particularsForm: {},
+        bdd_item:{
+          setStatus:'TE:bdd_item_set_status',
+          cacheType:"TE:bdd_item_cache_type",
+        },
+        label:{
+          setStatus:"状态",
+          cacheType:"缓存类型"
+        }
       };
     },
     components: {
@@ -182,7 +184,8 @@
       PageItem,
       topItemdialogs,
       subItem,
-      subItemParticulars
+      subItemParticulars,
+      bddSetStatus
     },
     created() {
       this.getSetLists();
@@ -198,12 +201,18 @@
         console.log(data);
       },
       getSetLists() { //请求setKey下的列表-----------------------------setKey
-        this.setKeylistLoading = true;
-        itemSetLists().then(res => {
-          this.setKeyTableData = res.data.lists;
-          this.setKeylistLoading = false;
-        }).catch((res) => {
-          this.setKeylistLoading = false;
+        // this.setKeylistLoading = true;
+        itemSetLists().then(res=>{
+          this.setKeyTableData=res.data.lists
+          // console.log(res.data.lists)
+        })
+        te.pagination.queryPage('pagingTeBddItemSet', data=>{
+          // console.log(data)
+          // this.setKeyTableData = data.currentPageData;
+          // this.setKeyTotal=data.rowCount;//总页数
+          // this.setKeylistQuery.setKeycurrentPage=data.beginRow;//当前页
+          // this.setKeylistQuery.pageSize=data.pageCapacity;//一页多少条
+          // this.setKeylistLoading = false;
         })
       },
       setKeySearch() { //setKey的搜索按钮
@@ -348,7 +357,7 @@
         this.SubItemTitle = "新增：子级SubItem"
       },
       nodeClick(node, data) { //行点击
-        this.particularsForm=node
+        this.particularsForm = node
       },
       nodeselect(node, data) { //选择模态框选择的节点
         this.selectNuber = node.label
