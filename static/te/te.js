@@ -1010,7 +1010,7 @@
      * @param {function(Object):void} action 分页数据返回后的回调函数，参数为Object实例，包含属性：
      * pageCapacity（int，页面容量）、pageTotal（总页数）、pageNumber（页码）、rowCount（总行数）、beginRow（起始行编号）、
      * endRow（结束行编号）、currentPageData（当前页的数据集）、params（实际执行的查询参数）。
-     * @param {Object} [params] 查询参数。
+     * @param {Object} [params=null] 查询参数。
      * @param {int} [pageNumber=1] 页码，默认值由te.pagination.default.pageNumber设定。
      * @param {string} [sortIndicator] 排序字串，格式：&lt;字段名1&gt;,&lt;a/d&gt;[;&lt;字段名2&gt;,&lt;a/d&gt;[...[;&lt;字段名n&gt;,&lt;a/d&gt;]]]。
      * @param {int} [pageCapacity=30] 页容量，默认值由te.pagination.default.pageCapacity设定。
@@ -1105,6 +1105,9 @@
         sysAdmin_bdd_createItemSet: '/te/bdd/createItemSet',
         sysAdmin_bdd_updateItemSet: '/te/bdd/updateItemSet',
         sysAdmin_bdd_deleteItemSet: '/te/bdd/deleteItemSet',
+        sysAdmin_bdd_createTopItem: '/te/bdd/createTopItem',
+        sysAdmin_bdd_updateTopItem: '/te/bdd/updateTopItem',
+        sysAdmin_bdd_deleteTopItem: '/te/bdd/deleteTopItem',
         xxx: '/xx/xx/xxx'
     };
 

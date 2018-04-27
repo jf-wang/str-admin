@@ -29,8 +29,8 @@
             size="mini" @row-click="setKeyHandleChange" height="290">
             <el-table-column prop="setKey" label="Key" align="center">
             </el-table-column>
-            <bdd-SetStatus :prop="setKeyTableData.setStatus" :bddItem='bdd_item.setStatus' :label='label.setStatus'></bdd-SetStatus>
-            <bdd-SetStatus :prop="setKeyTableData.cacheType" :bddItem='bdd_item.cacheType' :label='label.cacheType'></bdd-SetStatus>
+            <bdd-SetStatus :prop="bdd_key.setStatus" :indexes="bdd_key.setStatus" :bddItem='bdd_item.setStatus' :label='label.setStatus'></bdd-SetStatus>
+            <bdd-SetStatus :prop="bdd_key.cacheType" :indexes="bdd_key.cacheType" :bddItem='bdd_item.cacheType' :label='label.cacheType'></bdd-SetStatus>
             <el-table-column prop="setTitle" label="标题" align="center">
             </el-table-column>
             <el-table-column label="操作" align="center">
@@ -45,7 +45,8 @@
           <PageItem :handleSizeChange="setKeyhandleSizeChange" :handleCurrentChange="setKeyhandleCurrentChange" :listQuery="setKeylistQuery"
             :total="setKeyTotal"></PageItem>
           <!-- set-key的模态框 -->
-          <set-keydialogs @successCBK="getSetLists" :setKeyruleForm="setKeyruleForm" :setKeyTitle='setKeyTitle' :visible='visible'></set-keydialogs>
+          <set-keydialogs :genre="genre" @successCBK="getSetLists" :backupsruleForm="backupsruleForm" :setKeyruleForm="setKeyruleForm"
+            :setKeyTitle='setKeyTitle' :visible='visible'></set-keydialogs>
         </el-col>
         <!-- --------------------------------------------------------------------TopItem管理----------------------------------------------------------------- -->
         <el-col :span="12" style="border-left:5px solid #eeeeee;border-bottom:10px solid #eeeeee;">
@@ -68,7 +69,7 @@
           </el-row>
           <el-table :data="topItemTableData" style="width: 100%" v-loading="topItemlistLoading" max-height="650" highlight-current-row
             size="mini" @row-click="topItemHandleChange" height="290">
-            <el-table-column prop="KeyId" label="TopItem Key" align="center">
+            <el-table-column prop="itemKey" label="TopItem Key" align="center">
             </el-table-column>
             <el-table-column prop="title" label="标题" align="center">
             </el-table-column>
@@ -84,7 +85,7 @@
           <PageItem :handleSizeChange="topItemhandleSizeChange" :handleCurrentChange="topItemhandleCurrentChange" :listQuery="topItemlistQuery"
             :total="topItemTotal"></PageItem>
           <!-- set-key的模态框 -->
-          <top-itemdialogs @successCBK="getTopItemList" :setKeyruleForm="topItemruleForm" :setKeyTitle='topItemTitle' :visible='visible'></top-itemdialogs>
+          <top-itemdialogs :genre="genre" @successCBK="getTopItemList" :setKeyruleForm="topItemruleForm" :setKeyTitle='topItemTitle' :visible='visible' :teBddItemSetId="teBddItemsetKey"></top-itemdialogs>
         </el-col>
       </el-row>
       <el-row>
@@ -145,6 +146,8 @@
         setKeyTableData: [], //setKey的表格
         setKeylistQuery: {},
         setKeyTotal: 40, //setKey的总页数
+        setKeyPageSize: 0, //一页多少条
+        setKeycurrentPage: 1, //当前第几页
         setKeylistLoading: false, //setKey的loading
         visible: {
           setKeydialog: false, //setKey模态框里
@@ -152,15 +155,20 @@
           subItemdialog: false,
           shiftSubItemdialog: false //移动模态框
         },
-        setKeyTitle: "新增", //setKey模态框里的Title
+        setKeyTitle: "", //setKey模态框里的Title
         setKeyruleForm: {},
+        backupsruleForm: {},
         topItem: "", //----------------------------------------------------TopItem的搜索内容
+        teBddItemSetId:null,//当setKey点击时候存储的id
+        teBddItemsetKey:null,
         topItemTitle: "", //TopItem的搜索标题
         topItemTableData: [], //setKey的表格
         topItemlistLoading: false,
         topItemlistQuery: {},
-        topItemTotal: 40, //topItem的总页数
-        topItemTitle: "新增", //topItem模态框里的Title
+        topItemTotal: 0, //topItem的总页数
+        topItemPageSize: 0, //一页多少条
+        topItemcurrentPage: 1, //当前第几页
+        topItemTitle: "", //topItem模态框里的Title
         topItemruleForm: {},
         SubItemTree: [], //-------------------------------------------------SubItem管理
         SubItemTitle: "", //SubItem模态框标题
@@ -169,14 +177,19 @@
         selectNuber: null,
         shiftType: "", //移动方式
         particularsForm: {},
-        bdd_item:{
-          setStatus:'TE:bdd_item_set_status',
-          cacheType:"TE:bdd_item_cache_type",
+        bdd_item: {
+          setStatus: 'TE:bdd_item_set_status',
+          cacheType: "TE:bdd_item_cache_type",
         },
-        label:{
-          setStatus:"状态",
-          cacheType:"缓存类型"
-        }
+        label: {
+          setStatus: "状态",
+          cacheType: "缓存类型"
+        },
+        bdd_key: {
+          setStatus: "setStatus",
+          cacheType: "cacheType"
+        },
+        genre: 0
       };
     },
     components: {
@@ -189,7 +202,7 @@
     },
     created() {
       this.getSetLists();
-      this.gettreeLists()
+      // this.gettreeLists()
     },
     mounted() {},
     computed: {
@@ -197,131 +210,196 @@
     },
     props: [],
     methods: {
-      handleNodeClick(data) {
-        console.log(data);
-      },
-      getSetLists() { //请求setKey下的列表-----------------------------setKey
-        // this.setKeylistLoading = true;
-        itemSetLists().then(res=>{
-          this.setKeyTableData=res.data.lists
-          // console.log(res.data.lists)
-        })
-        te.pagination.queryPage('pagingTeBddItemSet', data=>{
-          // console.log(data)
-          // this.setKeyTableData = data.currentPageData;
-          // this.setKeyTotal=data.rowCount;//总页数
-          // this.setKeylistQuery.setKeycurrentPage=data.beginRow;//当前页
-          // this.setKeylistQuery.pageSize=data.pageCapacity;//一页多少条
-          // this.setKeylistLoading = false;
+      getSetLists() { //请求setKey下的列表------------------------------------------ok
+        this.setKeylistLoading = true;
+        te.pagination.queryPage('pagingTeBddItemSet', data => { //获取默认列表
+          this.setKeyTableData = data.currentPageData;
+          this.setKeyTotal = data.rowCount; //总页数
+          this.setKeylistQuery.setKeycurrentPage = data.beginRow; //当前页
+          this.setKeylistQuery.pageSize = data.pageCapacity; //一页多少条
+          this.setKeylistLoading = false;
+        }, err => {
+          this.$message.warning(err.__msg)
+          this.setKeylistLoading = false;
         })
       },
-      setKeySearch() { //setKey的搜索按钮
-        this.setKeylistLoading = true
-        setTimeout(() => {
-          this.setKeylistLoading = false
-        }, 1000);
+      setKeySearch() { //setKey的搜索按钮---------------------------------------------OK
+        const zz=	/^[a-zA-Z0-9_-]+$/
+        if(!zz.test(this.setKey)){
+          this.setKey="";
+          this.$message.warning('不允许特殊字符进行搜索');
+        }else{
+          this.setKeylistLoading = true;
+          te.pagination.queryPage('pagingTeBddItemSet', data => {
+            this.setKeyTableData = data.currentPageData;
+            this.setKeyTotal = data.rowCount; //总页数
+            this.setKeylistQuery.setKeycurrentPage = data.beginRow; //当前页
+            this.setKeylistQuery.pageSize = data.pageCapacity; //一页多少条
+            this.setKeylistLoading = false;
+          }, {
+            setKey: this.setKey
+          }, 1, null, 30)
+        }
       },
-      setKeyAdd() { //setKey的新增按钮
-        this.visible.setKeydialog = true;
-        this.setKeyTitle = "新增:ItemSet";
-        this.$refs['setKeyruleForm'].resetFields();
+      setKeyAdd() { //setKey的新增按钮-------------------------------------------------ok
+        this.visible.setKeydialog = true; //模态框显示
+        this.setKeyTitle = "新增:ItemSet"; //模态框名标题
+        this.genre = 1; //清空显示
+        this.setKeyruleForm = {}; //清空表单
+        this.$refs['setKeyruleForm'].resetFields(); //重置下表单验证
       },
-      setKeyHandleChange(row) { //setKey的某一行被点击时该事件
-        console.log(row)
-        this.getTopItemList()
+      setKeyHandleChange(row) { //setKey的某一行被点击时该事件--------------------------ok
+        this.teBddItemsetKey=row.setKey;//存储上级id
+        this.teBddItemSetId=row.teBddItemSetId;//存储上级id
+        this.topItemlistLoading=true;//加载
+        te.pagination.queryPage('pagingTeBddTopItem', data => { //获取默认列表
+          this.topItemTableData=data.currentPageData;//赋值
+          this.topItemlistLoading=false;//加载结束
+          this.topItemTotal = data.rowCount; //总页数
+          this.topItemlistQuery.setKeycurrentPage = data.beginRow; //当前页
+          this.topItemlistQuery.pageSize = data.pageCapacity; //一页多少条
+        },{teBddItemSetId:row.teBddItemSetId},null,null)
       },
-      setKeyvisit(row) { //setKey的游览
-        this.setKeyruleForm = row; //付过去
-        this.visible.setKeydialog = true;
-        this.setKeyTitle = "游览:ItemSet";
-        this.$refs['setKeyruleForm'].resetFields();
+      setKeyvisit(row) { //setKey的游览-------------------------------------------------ok
+        this.setKeyruleForm = Object.assign({}, row); //赋值
+        this.setKeyruleForm.setStatus = row.setStatus
+        this.setKeyruleForm.cacheType = row.cacheType
+        this.visible.setKeydialog = true; //模态框显示
+        this.setKeyTitle = "游览:ItemSet"; //模态框名标题
+        this.genre = 0; //清空重置都不显示
+        this.$refs['setKeyruleForm'].resetFields(); //重置下表单验证
       },
-      setKeyhandleClick(row) { //setKey的修改
-        this.setKeyruleForm = row
-        this.visible.setKeydialog = true;
-        this.setKeyTitle = "修改:ItemSet";
-        this.$refs['setKeyruleForm'].resetFields();
+      setKeyhandleClick(row) { //setKey的修改-------------------------------------------------ok
+        this.setKeyruleForm = Object.assign({}, row); //赋值
+        this.setKeyruleForm.setStatus = row.setStatus
+        this.setKeyruleForm.cacheType = row.cacheType
+        this.setKeyruleForm.originalKey = row.setKey; //后台需要把就得setKey赋值到originalKey上
+        this.backupsruleForm = Object.assign({}, row); //备份个表单，重置用
+        this.visible.setKeydialog = true; //模态框显示
+        this.setKeyTitle = "修改:ItemSet"; //模态框名标题
+        this.genre = 2; //重置显示
+        this.$refs['setKeyruleForm'].resetFields(); //重置下表单验证
       },
-      setKeydeleteRow(row) { //setKey的删除
+      setKeydeleteRow(row) { //setKey的删除---------------------------------------------------ok
         this.$confirm('此操作将删除此Set Key, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+          te.crud.do('sysAdmin_bdd_deleteItemSet', {
+            setKey: row.setKey
+          }, data => {
+            this.$message.success(data.__msg);
+            this.getSetLists()
+          }, err => {
+            this.$message.warning(err.__msg)
+          })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+          this.$message.info('已取消删除');
         });
       },
-      setKeyhandleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+      setKeyhandleSizeChange(val) {//-------------------------------------------------------OK
+        this.setKeyPageSize = val;
+        te.pagination.queryPage('pagingTeBddItemSet', data => {
+          this.setKeyTableData = data.currentPageData;
+          this.setKeyTotal = data.rowCount; //总页数
+          this.setKeylistQuery.setKeycurrentPage = data.beginRow; //当前页
+          this.setKeylistQuery.pageSize = data.pageCapacity; //一页多少条
+          this.setKeylistLoading = false;
+        }, {setKey: this.setKey}, this.setKeyPageSize, null, val)
       },
-      setKeyhandleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+      setKeyhandleCurrentChange(val) {//-------------------------------------------------------OK
+        this.setKeycurrentPage = val;
+        te.pagination.queryPage('pagingTeBddItemSet', data => {
+          this.setKeyTableData = data.currentPageData;
+          this.setKeyTotal = data.rowCount; //总页数
+          this.setKeylistQuery.setKeycurrentPage = data.beginRow; //当前页
+          this.setKeylistQuery.pageSize = data.pageCapacity; //一页多少条
+          this.setKeylistLoading = false;
+        }, {setKey: this.setKey}, val, null, this.setKeyPageSize)
       },
-      getTopItemList() { //------------------------------------------topItem
-        this.topItemlistLoading = true;
-        itemSetLists().then(res => {
-          this.topItemTableData = res.data.lists;
+      topItemhandleSizeChange(val) {//--------------------------------------------------------ok
+        this.topItemPageSize = val;
+        te.pagination.queryPage('pagingTeBddTopItem', data => {
+          this.topItemTableData = data.currentPageData;
+          this.topItemTotal = data.rowCount; //总页数
+          this.topItemlistQuery.topItemcurrentPage = data.beginRow; //当前页
+          this.topItemlistQuery.pageSize = data.pageCapacity; //一页多少条
           this.topItemlistLoading = false;
-        }).catch((res) => {
-          this.topItemTableData = false;
-        })
+        },{itemKey: this.topItem,title: this.topItemTitle}, this.topItemPageSize, null, val)
       },
-      topItemSearch() {
-        this.topItemlistLoading = true
-        setTimeout(() => {
-          this.topItemlistLoading = false
-        }, 1000);
+      topItemhandleCurrentChange(val) {//----------------------------------------------------ok
+        this.topItemcurrentPage = val;
+        te.pagination.queryPage('pagingTeBddTopItem', data => {
+          this.topItemTableData = data.currentPageData;
+          this.topItemTotal = data.rowCount; //总页数
+          this.topItemlistQuery.topItemcurrentPage = data.beginRow; //当前页
+          this.topItemlistQuery.pageSize = data.pageCapacity; //一页多少条
+          this.topItemlistLoading = false;
+        }, {itemKey: this.topItem,title: this.topItemTitle}, val, null, this.topItemPageSize)
       },
-      topItemAdd() { //新增
-        this.visible.topItemdialogs = true;
-        this.topItemTitle = "新增:TopItem";
-        this.$refs['topItemTableData'].resetFields();
+      getTopItemList() { //-----------topItem------------------------------------------------ok
+        te.pagination.queryPage('pagingTeBddTopItem', data => { //获取默认列表
+          this.topItemTableData=data.currentPageData;//赋值
+          this.topItemlistLoading=false;//加载结束
+          this.topItemTotal = data.rowCount; //总页数
+          this.topItemlistQuery.setKeycurrentPage = data.beginRow; //当前页
+          this.topItemlistQuery.pageSize = data.pageCapacity; //一页多少条
+        },{teBddItemSetId:this.teBddItemSetId},null,null)
+      },
+      topItemSearch() {//搜索------------------------------------------------------ok
+        const zz=	/^[a-zA-Z0-9_-]+$/
+        if(!zz.test(this.topItem)){
+          this.topItem="";
+          this.$message.warning('不允许特殊字符进行搜索');
+        }else{
+          this.topItemlistLoading = true;
+          te.pagination.queryPage('pagingTeBddTopItem', data => {
+            this.topItemTableData = data.currentPageData;
+            this.topItemTotal = data.rowCount; //总页数
+            this.setKeylistQuery.topItemcurrentPage = data.beginRow; //当前页
+            this.setKeylistQuery.topItemPageSize = data.pageCapacity; //一页多少条
+            this.topItemlistLoading = false;
+          }, {teBddItemSetId:this.teBddItemSetId,itemKey:this.topItem,title:this.topItemTitle}, 1, null, 30)
+        }
+      },
+      topItemAdd() { //新增--------------------------------------------ok
+        if(this.teBddItemSetId){
+          this.visible.topItemdialogs = true;
+          this.topItemTitle = "新增:TopItem";
+          this.$refs['topItemTableData'].resetFields();
+        }else{
+          this.$message.warning("未取到Set Key")
+        }
       },
       topItemHandleChange(row) { //setKey的某一行被点击时该事件
         console.log(row)
       },
-      topItemvisit(row) { //setKey的游览
-        this.setKeyruleForm = row; //付过去
+      topItemvisit(row) { //setKey的游览-----------------------------------ok
+        this.topItemruleForm = row; //付过去
         this.visible.topItemdialogs = true;
         this.topItemTitle = "游览:TopItem";
         this.$refs['topItemTableData'].resetFields();
       },
       topItemhandleClick(row) { //setKey的修改
-        this.setKeyruleForm = row
+        this.topItemruleForm = row
         this.visible.topItemdialogs = true;
         this.topItemTitle = "修改:TopItem";
         this.$refs['topItemTableData'].resetFields();
       },
-      topItemdeleteRow(row) { //setKey的删除
+      topItemdeleteRow(row) { //setKey的删除----------------------------ok
         this.$confirm('此操作将删除此TopItem, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+           te.crud.do('sysAdmin_bdd_deleteTopItem', {
+            teBddTopItemId: row.teBddTopItemId
+          }, data => {
+            this.$message.success(data.__msg);
+            this.getTopItemList()
+          }, err => {
+            this.$message.warning(err.__msg)
+          })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+          this.$message.info('已取消删除');
         });
-      },
-      topItemhandleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      topItemhandleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
       },
       gettreeLists() { //----------------------------------------------SubItem
         treeLists().then(res => {
@@ -347,7 +425,7 @@
         // console.log(node, data)
       },
       append(node, data) { //新增同级
-        // console.log(node, data)
+        // console.log(node, data) 
         this.visible.subItemdialog = true
         this.SubItemTitle = "新增：同级SubItem"
       },
@@ -378,8 +456,11 @@
           this.nodeNuber = null
           this.selectNuber = null
         }
+      },
+    },
+      watch: {
+
       }
-    }
   };
 
 </script>

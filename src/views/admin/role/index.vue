@@ -7,7 +7,7 @@
         <el-breadcrumb-item>员工管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="messageCenter">
+    <div class="messageCenter"> 
       <el-row>
         <el-col :span="16">
           <div class="search-form">
@@ -16,7 +16,7 @@
                 <el-col :span="6">
                   <el-form-item label="姓名:">
                     <el-input v-model="listQuery.name" size="small" placeholder="请输入员工姓名"></el-input>
-                  </el-form-item>
+                  </el-form-item> 
                 </el-col>
                 <el-col :span="5" :offset="1">
                   <el-form-item label="状态:">
