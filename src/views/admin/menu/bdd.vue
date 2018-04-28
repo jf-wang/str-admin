@@ -94,7 +94,7 @@
           <div style="overflow:hidden">
             <el-button type="text" style="float:right" size="mini" title="新增顶层SubItem" icon="el-icon-circle-plus-outline" @click="addNews">新增顶层SubItem</el-button>
           </div>
-          <el-tree :data="SubItemTree" @node-click="nodeClick" node-key="id" default-expand-all :expand-on-click-node="false" draggable>
+          <el-tree :data="SubItemTree" :props="SubItemTreeprops" :label="SubItemTree.title" @node-click="nodeClick" node-key="id" default-expand-all :expand-on-click-node="false" draggable>
             <span class="custom-tree-node" slot-scope="{ node, data }">
               <span>{{ node.label }}</span>
               <span>
@@ -106,11 +106,11 @@
               </span>
             </span>
           </el-tree>
-          <sub-item @successCBK="gettreeLists" :setKeyruleForm="SubItemruleForm" :setKeyTitle='SubItemTitle' :visible='visible'></sub-item>
-          <el-dialog title="移动:SubItem" :visible.sync="visible.shiftSubItemdialog" width="40%">
+          <sub-item @successCBK="gettreeLists" :TopItemPath="TopItemPath" :genre="genre" :setKeyruleForm="SubItemruleForm" :setKeyTitle='SubItemTitle' :visible='visible'></sub-item>
+          <el-dialog title="移动:SubItem"  :visible.sync="visible.shiftSubItemdialog" width="40%">
             <el-form :model="setKeyruleForm" ref="setKeyruleForm" label-width="120px" class="demo-ruleForm">
               <el-form-item label="选择移动位置">
-                <el-tree :data="SubItemTree" @node-click="nodeselect" node-key="id" default-expand-all :expand-on-click-node="false" draggable></el-tree>
+                <el-tree :data="SubItemTree" :props="SubItemTreeprops" @node-click="nodeselect" node-key="id" default-expand-all :expand-on-click-node="false" draggable></el-tree>
               </el-form-item>
               <el-form-item label="选择移动方式">
                 <el-select v-model="shiftType" placeholder="请选择活动区域">
@@ -189,7 +189,12 @@
           setStatus: "setStatus",
           cacheType: "cacheType"
         },
-        genre: 0
+        genre: 0,
+        SubItemTreeprops:{
+          children:'subItems',
+          label:'title'
+        },
+        TopItemPath:"",//TopItemPath
       };
     },
     components: {
@@ -202,7 +207,7 @@
     },
     created() {
       this.getSetLists();
-      // this.gettreeLists()
+      this.topItemHandleChange()
     },
     mounted() {},
     computed: {
@@ -370,9 +375,7 @@
           this.$message.warning("未取到Set Key")
         }
       },
-      topItemHandleChange(row) { //setKey的某一行被点击时该事件
-        console.log(row)
-      },
+     
       topItemvisit(row) { //setKey的游览-----------------------------------ok
         this.topItemruleForm = row; //付过去
         this.visible.topItemdialogs = true;
@@ -401,12 +404,27 @@
           this.$message.info('已取消删除');
         });
       },
-      gettreeLists() { //----------------------------------------------SubItem
-        treeLists().then(res => {
-          this.SubItemTree = res.data.data;
-        }).catch((res) => {
-
-        })
+      topItemHandleChange(row) { //setKey的某一行被点击时该事件---------------ok
+        this.TopItemPath=this.teBddItemsetKey+":"+row.itemKey
+        te.bdd.queryItem(''+this.teBddItemsetKey+":"+row.itemKey+'', data => { //获取默认列表
+        // te.bdd.queryItem('COM:district', data => { //获取默认列表
+          if(data.subItems){
+            var datas = Object.assign({}, data); //赋值
+            this.SubItemTree=datas.subItems
+          }else{
+            this.SubItemTree=[]
+          }
+        },false)
+      },
+      gettreeLists() { //---------------SubItem---------------------------------ok
+        te.bdd.loadData(''+this.TopItemPath+'', data => { //获取默认列表
+          if(data[0].subItems){
+            var datas = Object.assign({}, data); //赋值
+            this.SubItemTree=datas[0].subItems
+          }else{
+            this.SubItemTree=[]
+          }
+        },false)
       },
       addNews() { //新增顶层SubItem
         this.visible.subItemdialog = true
@@ -418,6 +436,7 @@
       },
       amend(node, data) { //修改
         // console.log(node, data)
+        this.genre=2;
         this.visible.subItemdialog = true
         this.SubItemTitle = "修改:SubItem"
       },
@@ -426,15 +445,17 @@
       },
       append(node, data) { //新增同级
         // console.log(node, data) 
+        this.genre=1;
         this.visible.subItemdialog = true
         this.SubItemTitle = "新增：同级SubItem"
       },
       sublevel(node, data) { //新增子集
         // console.log(node, data)
+        this.genre=1;
         this.visible.subItemdialog = true
         this.SubItemTitle = "新增：子级SubItem"
       },
-      nodeClick(node, data) { //行点击
+      nodeClick(node, data) { //行点击-----------------------------ok
         this.particularsForm = node
       },
       nodeselect(node, data) { //选择模态框选择的节点
@@ -474,10 +495,17 @@
     }
   }
 
-  .el-col-12,
+  .el-col-12,{
+    height: 450px;
+    overflow: scroll;
+    padding: 10px 0 10px 10px;
+    &>h2 {
+      font-size: 16px;
+    }
+  }
   .el-col-13,
   .el-col-11 {
-    height: 450px;
+    height: 390px;
     overflow: scroll;
     padding: 10px 0 10px 10px;
     &>h2 {

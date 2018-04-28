@@ -281,7 +281,11 @@
      * BDD组件参数默认值，属性包括：updatingTimerPeriod（更新计时器周期，默认值为10分钟）。
      * @type {{updatingTimerPeriod: number}}
      */
-    te.bdd.constants = {updatingPeriod: 10 * 60 * 1000};
+    te.bdd.constants = {
+        updatingPeriod: 10 * 60 * 1000,
+        POSITION_UNDER: 4,
+        POSITION_BROTHER: 5
+    };
     // te.bdd.constants = {updatingPeriod: 20 * 1000};
     te.bdd._topItemList = {};
     te.bdd._pattern_topItemPath = /^([\w-_]{1,300})(:[\w-_]{1,300})$/;
@@ -1108,6 +1112,10 @@
         sysAdmin_bdd_createTopItem: '/te/bdd/createTopItem',
         sysAdmin_bdd_updateTopItem: '/te/bdd/updateTopItem',
         sysAdmin_bdd_deleteTopItem: '/te/bdd/deleteTopItem',
+        sysAdmin_bdd_createSubItem: '/te/bdd/createSubItem',
+        sysAdmin_bdd_updateSubItem: '/te/bdd/updateSubItem',
+        sysAdmin_bdd_deleteSubItem: '/te/bdd/deleteSubItem',
+        sysAdmin_bdd_moveSubItem: '/te/bdd/moveSubItem',
         xxx: '/xx/xx/xxx'
     };
 
@@ -1233,7 +1241,7 @@
 
 //todo: ------------------------------ DEBUG ------------------------------
     te.debug = {};
-    te.debug.log = function (data){
+    te.debug.log = function (data) {
         console.log(data);
     };
 

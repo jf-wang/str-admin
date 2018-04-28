@@ -2,52 +2,49 @@
   <div id="messageForm">
     <el-form :model="logo" label-width="100px" ref="logo" class="form">
       <el-form-item label="path:" style="margin-bottom:0">
-        <span>{{logo.label}}</span>
-      </el-form-item>
-      <el-form-item label="Source Key:" style="margin-bottom:0">
-        <span>{{logo.loginName}}</span>
+        <span>{{logo.path}}</span>
       </el-form-item>
       <el-form-item label="SubItem Key:" style="margin-bottom:0">
-        <span>{{logo.section}}</span>
+        <span>{{logo.key}}</span>
       </el-form-item>
       <el-form-item label="Title Path:" style="margin-bottom:0">
-        <span>{{logo.duty}}</span>
+        <span>{{logo.titlePath}}</span>
       </el-form-item>
       <el-form-item label="标题:" style="margin-bottom:0">
-         <span>{{logo.record}}</span>
+         <span>{{logo.title}}</span>
       </el-form-item>
       <el-form-item label="描述:" style="margin-bottom:0">
-        <span>{{logo.record}}</span>
+        <span>{{logo.desc}}</span>
       </el-form-item>
       <el-form-item label="附加值1:" style="margin-bottom:0">
-        <span>{{logo.IDNumber}}</span>
+        <span>{{logo.v1}}</span>
       </el-form-item>
       <el-form-item label="附加值2:" style="margin-bottom:0">
-        <span>{{logo.gender}}</span>
+        <span>{{logo.v2}}</span>
       </el-form-item>
       <el-form-item label="附加值3:" style="margin-bottom:0">
-        <span>{{logo.establishedTime}}</span>
+        <span>{{logo.v3}}</span>
       </el-form-item>
       <el-form-item label="附加值4:" style="margin-bottom:0">
-        <span>{{logo.specialPane}}</span>
+        <span>{{logo.v4}}</span>
       </el-form-item>
       <el-form-item label="附加值5:" style="margin-bottom:0">
-        <span>{{logo.phone}}</span>
+        <span>{{logo.v5}}</span>
       </el-form-item>
       <el-form-item label="附加值6:" style="margin-bottom:0">
-        <span>{{logo.Email}}</span>
+        <span>{{logo.v6}}</span>
       </el-form-item>
       <el-form-item label="附加值7:" style="margin-bottom:0">
-        <span>{{logo.remark}}</span>
+        <span>{{logo.v7}}</span>
       </el-form-item>
       <el-form-item label="附加值8:" style="margin-bottom:0">
-        <span>{{logo.default}}</span>
+        <span>{{logo.v8}}</span>
       </el-form-item>
       <el-form-item label="附加值9:" style="margin-bottom:0">
-        <span>{{logo.default}}</span>
+        <span>{{logo.v9}}</span>
       </el-form-item>
       <el-form-item label="附加值10:" style="margin-bottom:0">
-        <span>{{logo.default}}</span>
+        <span>{{logo.v10}}</span>
       </el-form-item>
     </el-form>
   </div>
