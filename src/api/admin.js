@@ -1,13 +1,13 @@
 import { userTableData, roleTableData } from '@/mock/admin'
 import { baseUrl } from '@/config/env'
 import { DIC } from '@/const/dic'
-import fetch from '@/util/fetch'
+import service from '@/util/fetch'
 export const getUserData = (page) => {
   return new Promise((resolve, reject) => {
     resolve({
       data: userTableData
     }); 
-  })
+  }) 
 }
 
 export const getRoleData = (page) => {
@@ -26,26 +26,26 @@ export const getDic = (type) => {
   })
 }
 export function getrololists() { //获取员工表格数据
-  return fetch({
+  return service({
     url: '/rolo/lists',
     method: 'get'
   })
 }
 export function getoptionsLists() { //获取默认模块
-  return fetch({
+  return service({
     url: '/options/optionsLists',
     method: 'get'
   })
 }
 export function getstaffList() { //获取用户默认模块
-  return fetch({
+  return service({
     url: '/staff/staffList',
     method: 'get'
   })
 }
 
 export function gettransferdataList() { //获取所有角色
-  return fetch({
+  return service({
     url: '/transferdata/transferdataList',
     method: 'get'
   })

@@ -12,7 +12,7 @@
 
 
 let baseUrl = '';
-let iconfontVersion = ['567566_sch40o867ogk3xr','637302_ux8dbb9r0p3f2yb9'];
+let iconfontVersion = ['567566_sch40o867ogk3xr','637302_sehl1kqcfcqpk3xr'];
 let iconfontUrl = `//at.alicdn.com/t/font_$key.css`;
 let codeUrl = `${baseUrl}/code`
 

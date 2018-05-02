@@ -34,7 +34,7 @@
     props: ['setKeyTitle', 'setKeyruleForm', 'visible', 'backupsruleForm', 'genre'],
     data() {
       const setKey = (rule, value, callback) => {
-        const zz = /^[a-zA-Z\d]+$/
+        const zz = /^[a-zA-Z0-9_-]+$/
         if (!value) {
           callback(new Error('请输入Set Key'));
         } else if (!zz.test(value)) {

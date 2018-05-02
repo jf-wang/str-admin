@@ -1,34 +1,34 @@
 <template>
   <div id="messageForm">
-    <el-form :model="logo" label-width="100px" ref="logo" class="form">
-      <el-form-item label="标题:" style="margin-bottom:0">
+    <el-form :model="logo" label-width="105px" ref="logo" class="form">
+      <el-form-item label="标题 :" style="margin-bottom:0">
         <span>{{logo.headline}}</span>
       </el-form-item>
-      <el-form-item label="内容:" style="margin-bottom:0">
+      <el-form-item label="内容 :" style="margin-bottom:0">
         <span>{{logo.matter}}</span>
       </el-form-item>
-      <el-form-item label="附件:" style="margin-bottom:0">
+      <el-form-item label="附件 :" style="margin-bottom:0">
         <img :src="logo.dialogImageUrl" alt="" width="60px" height="60px">
       </el-form-item>
-      <el-form-item label="重要性:" style="margin-bottom:0">
+      <el-form-item label="重要性 :" style="margin-bottom:0">
         <span>{{logo.significance}}</span>
       </el-form-item>
-      <el-form-item label="来源:" style="margin-bottom:0">
+      <el-form-item label="来源 :" style="margin-bottom:0">
         <span>{{logo.gender}}</span>
       </el-form-item>
-      <el-form-item label="类别:" style="margin-bottom:0" >
+      <el-form-item label="类别 :" style="margin-bottom:0" >
           <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="发送人:" style="margin-bottom:0">
+      <el-form-item label="发送人 :" style="margin-bottom:0">
         <span>{{logo.sender}}</span>
       </el-form-item>
-      <el-form-item label="发送时间:" style="margin-bottom:0">
+      <el-form-item label="发送时间 :" style="margin-bottom:0">
         <span>{{logo.time}}</span>
       </el-form-item>
-      <el-form-item label="邮件通知状态:" style="margin-bottom:0">
+      <el-form-item label="邮件通知状态 :" style="margin-bottom:0">
         <span>{{logo.phone}}</span>
       </el-form-item>
-      <el-form-item label="邮件发送时间:" style="margin-bottom:0">
+      <el-form-item label="邮件发送时间 :" style="margin-bottom:0">
         <span>{{logo.nativePlace}}</span>
       </el-form-item>
     </el-form>
@@ -112,7 +112,7 @@
     span {
       display: block;
       border-bottom: 1px solid #dddddd;
-      height: 40px;
+      height: 35px;
     }
   }
 

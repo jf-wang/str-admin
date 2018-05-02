@@ -21,10 +21,10 @@
 </template>
 <script>
   export default {
-    props: ['setKeyTitle','setKeyruleForm', 'visible','genre','teBddItemSetId'],
+    props: ['setKeyTitle','setKeyruleForm', 'visible','genre','teBddItemSetId','backupsruleForm','topItembackupsruleForm'],
     data() {
         const setKey = (rule, value, callback) => {
-        const zz = /^[a-zA-Z\d]+$/
+        const zz =/^[a-zA-Z0-9_-]+$/
         if (!value) {
           callback(new Error('请输入Set Key'));
         } else if (!zz.test(value)) {
@@ -84,7 +84,12 @@
       },
        resetForm(formName) {
         this.$refs[formName].resetFields();
-      }
+      },
+       replacement(formName) { //重置
+        this.setKeyruleForm.itemKey = this.topItembackupsruleForm.itemKey;
+        this.setKeyruleForm.title = this.topItembackupsruleForm.title;
+        this.setKeyruleForm.remark = this.topItembackupsruleForm.remark;
+      },
     }
   }
 

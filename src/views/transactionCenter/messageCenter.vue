@@ -65,7 +65,8 @@
                 </el-form-item>
               </transition>
             </el-form>
-            <el-button type="text" icon="icon-31zhuanfa" style="margin:10px 0;width:100px" @click="addNews">发送消息</el-button>
+            <el-button type="text" icon="icon-31zhuanfa" style="width:100px;float:right;color:#b20000" @click="addNews">发送消息</el-button>
+            <el-button type="text" icon="el-icon-refresh" style="margin:3px 20px;color:#409EFF;float:right" @click="getList">刷新</el-button>
             <el-table :data="tableData" style="width: 100%" v-loading="listLoading" max-height="650" highlight-current-row size="mini"
               @row-click="handleSelectionChange">
               <el-table-column prop="time" label="发送时间" align="center" sortable>

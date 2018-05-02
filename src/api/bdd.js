@@ -1,16 +1,16 @@
 //数据字典
-import fetch from '@/util/fetch'
+import service from '@/util/fetch'
 
 
 export function itemSetLists() { //ItemSet下的列表
-  return fetch({
+  return service({
     url: '/ItemSet/lists',
     method: 'get'
-  })
+  }) 
 }
 
 export function treeLists() { //树的列表
-  return fetch({
+  return service({
     url: '/tree/lists',
     method: 'get'
   })

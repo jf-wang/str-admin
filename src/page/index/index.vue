@@ -29,7 +29,10 @@
             </el-submenu>
           </template>
         </div>
-        <img src="../../assets/img/19xiangyoushouqi.png" v-if="fangkai" alt="" width="12px" height="53px" class="shou" @click="fang">
+      </el-menu>
+      <el-menu unique-opened :default-active="tag.value" v-if="fangkai" class="levelMenu pull-chheight el-menu-vertical-demo"
+        background-color="#eeeeee" text-color="#363636" active-text-color="#363636" :collapse="isCollapse" style="position: relative;width:12px;border-right:none">
+        <img src="../../assets/img/19xiangyoushouqi.png" alt="" width="12px" height="53px" class="shou" @click="fang">
       </el-menu>
       <el-menu unique-opened :default-active="tag.value" v-if="levelMenuTrue" class="levelMenu pull-chheight el-menu-vertical-demo"
         background-color="#dddddd" text-color="#363636" active-text-color="#363636" :collapse="isCollapse" style="position: relative;">

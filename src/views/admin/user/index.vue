@@ -43,7 +43,11 @@
                   <el-button type="danger" @click="search">查询</el-button>
                 </el-form-item>
               </el-col>
-
+              <el-col :span="3" :offset="1">
+                <el-form-item>
+                  <el-button type="text" @click="getList">刷新</el-button>
+                </el-form-item>
+              </el-col>
             </el-col>
           </el-form-item>
         </el-form>

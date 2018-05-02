@@ -68,6 +68,7 @@
                 </el-form-item>
               </transition>
             </el-form>
+            <el-button type="text" icon="el-icon-refresh" style="margin:3px 20px;color:#409EFF;float:right" @click="getList">刷新</el-button>
             <el-table :data="tableData" style="width: 100%" v-loading="listLoading" max-height="650" highlight-current-row size="mini"
               @row-click="handleSelectionChange">
               <el-table-column prop="time" label="分派时间" align="center" sortable>

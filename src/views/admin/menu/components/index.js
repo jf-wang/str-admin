@@ -5,3 +5,5 @@ export { default as topItemdialogs } from './topItemdialogs'
 export { default as subItem } from './subItem'
 
 export { default as subItemParticulars } from './subItemParticulars'
+
+export { default as addNewSubitem } from './addNewSubitem'

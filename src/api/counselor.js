@@ -1,9 +1,9 @@
 //资源
-import fetch from '@/util/fetch'
+import service from '@/util/fetch'
 
 
 export function counselorlists() { //获取员工表格数据
-  return fetch({
+  return service({
     url: '/counselor/lists',
     method: 'get'
   })

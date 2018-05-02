@@ -62,17 +62,18 @@
                 </el-form-item>
               </transition>
             </el-form>
-            <el-button type="text" icon="el-icon-circle-plus-outline" style="margin:10px 0;color:#409EFF" @click="addNews(dialogForm)">新增</el-button>
-            <el-table :data="tableData" style="width: 100%" v-loading="listLoading" max-height="650" highlight-current-row size="mini" @row-click="handleSelectionChange">
-              <el-table-column prop="section" label="部门" align="center">
+            <el-button type="text" icon="el-icon-circle-plus-outline" style="color:#409EFF;float:right;color:#b20000" @click="addNews(dialogForm)">新增</el-button>
+            <el-button type="text" icon="el-icon-refresh" style="margin:0 20px;color:#409EFF;float:right" @click="getList">刷新</el-button>
+            <el-table :data="tableData" style="width: 100%" v-loading="listLoading"  max-height="650" highlight-current-row size="mini" @row-click="handleSelectionChange">
+              <el-table-column prop="section" label="部门" align="center"  width="230">
               </el-table-column>
-              <el-table-column prop="name" label="姓名" align="center">
+              <el-table-column prop="name" label="姓名" align="center"  width="230">
               </el-table-column>
-              <el-table-column prop="duty" label="职务" align="center">
+              <el-table-column prop="duty" label="职务" align="center"  width="230">
               </el-table-column>
-              <el-table-column prop="loginName" label="登录名" align="center">
+              <el-table-column prop="loginName" label="登录名" align="center"  width="230">
               </el-table-column>
-              <el-table-column label="操作" align="center">
+              <el-table-column label="操作" align="center"  width="174">
                 <template slot-scope="scope">
                   <el-button @click="handleClick(scope.row)" title="修改" type="text" icon="el-icon-edit" style="color:#e67f05"></el-button>
                   <el-button @click="deleteRow(scope.row)" title="删除" type="text" icon="el-icon-delete" style="color:#b20000"></el-button>

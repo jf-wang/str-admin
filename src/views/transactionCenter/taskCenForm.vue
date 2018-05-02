@@ -1,56 +1,56 @@
 <template>
   <div id="messageForm">
-    <el-form :model="logo" label-width="100px" ref="logo" class="form">
+    <el-form :model="logo" label-width="105px" ref="logo" class="form">
       <!-- <div class="dialogH">基础</div> -->
-      <el-form-item label="标题:" style="margin-bottom:0">
+      <el-form-item label="标题 :" style="margin-bottom:0">
         <span>{{logo.headline}}</span>
       </el-form-item>
-      <el-form-item label="类别:" style="margin-bottom:0">
+      <el-form-item label="类别 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
       <div class="dialogH">执行</div>
-      <el-form-item label="执行人:" style="margin-bottom:0">
+      <el-form-item label="执行人 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="状态:" style="margin-bottom:0">
+      <el-form-item label="状态 :" style="margin-bottom:0">
         <span>{{logo.significance | significances}}</span>
       </el-form-item>
-      <el-form-item label="当前状态描述:" style="margin-bottom:0">
+      <el-form-item label="当前状态描述 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="状态更新时间:" style="margin-bottom:0">
+      <el-form-item label="状态更新时间 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="执行人部门:" style="margin-bottom:0">
+      <el-form-item label="执行人部门 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="实际开始时间:" style="margin-bottom:0">
+      <el-form-item label="实际开始时间 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="实际结束时间:" style="margin-bottom:0">
+      <el-form-item label="实际结束时间 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
       <div class="dialogH">分派</div>
-      <el-form-item label="分派人:" style="margin-bottom:0">
+      <el-form-item label="分派人 :" style="margin-bottom:0">
         <span>{{logo.sender}}</span>
       </el-form-item>
-      <el-form-item label="描述:" style="margin-bottom:0">
+      <el-form-item label="描述 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="重要性:" style="margin-bottom:0">
+      <el-form-item label="重要性 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="分派时间:" style="margin-bottom:0">
+      <el-form-item label="分派时间 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="预期开始时间:" style="margin-bottom:0">
+      <el-form-item label="预期开始时间 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
-      <el-form-item label="预期开始时间:" style="margin-bottom:0">
+      <el-form-item label="预期开始时间 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
       <div class="dialogH">日志</div>
-      <el-form-item label="任务日志:" style="margin-bottom:0">
+      <el-form-item label="任务日志 :" style="margin-bottom:0">
         <span>{{logo.section | sections}}</span>
       </el-form-item>
     </el-form>
@@ -120,7 +120,7 @@ export default {
   span {
     display: block;
     border-bottom: 1px solid #dddddd;
-    height: 40px;
+    height: 35px;
   }
 }
 
