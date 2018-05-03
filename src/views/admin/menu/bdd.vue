@@ -87,7 +87,7 @@
           <PageItem :handleSizeChange="topItemhandleSizeChange" :handleCurrentChange="topItemhandleCurrentChange" :listQuery="topItemlistQuery"
             :total="topItemTotal"></PageItem>
           <!-- set-key的模态框 -->
-          <top-itemdialogs :genre="genre" @successCBK="getTopItemList" :setKeyruleForm="topItemruleForm" :setKeyTitle='topItemTitles'
+          <top-itemdialogs :genre="genre" @successCBK="getTopItemList" :setKeyruleForm="topItemruleForms" :setKeyTitle='topItemTitles'
             :visible='visible' :teBddItemSetId="teBddItemsetKey" :topItembackupsruleForm="topItembackupsruleForm"></top-itemdialogs>
           <visitTopItem :genre="genre" @successCBK="getTopItemList" :setKeyruleForm="topItemruleForm" :setKeyTitle='topItemTitles'
             :visible='visible' :teBddItemSetId="teBddItemsetKey" :topItembackupsruleForm="topItembackupsruleForm"></visitTopItem>
@@ -120,7 +120,7 @@
             <el-form :model="setKeyruleForm" ref="setKeyruleForm" label-width="120px" class="demo-ruleForm">
               <el-form-item label="选择移动位置">
                 <el-tree :data="SubItemTree" :props="SubItemTreeprops" @node-click="nodeselect" node-key="key" default-expand-all :expand-on-click-node="false"
-                  draggable></el-tree>
+                  draggable highlight-current></el-tree>
               </el-form-item>
               <el-form-item label="选择移动方式">
                 <el-select v-model="shiftType" placeholder="请选择活动区域">
@@ -186,6 +186,7 @@
         topItemcurrentPage: 1, //当前第几页
         topItemTitles: "", //topItem模态框里的Title
         topItemruleForm: {},
+        topItemruleForms: {},
         topItembackupsruleForm: {}, //topItem重置的备份表单
         SubItemTree: [], //-------------------------------------------------SubItem管理
         SubItemTitle: "", //SubItem模态框标题
@@ -293,6 +294,8 @@
           this.topItemlistQuery.setKeycurrentPage = data.beginRow; //当前页
           this.topItemlistQuery.pageSize = data.pageCapacity; //一页多少条
           this.$nextTick(function () {
+            this.topItem="";//清空筛选条件
+            this.topItemTitle="";//清空筛选条件
             this.topItemchecked(); //每次更新了数据，触发这个函数即可。
           });
         }, {
@@ -307,7 +310,7 @@
         this.setKeyruleForm = Object.assign({}, row); //赋值
         this.setKeyruleForm.setStatus = row.setStatus;
         this.setKeyruleForm.cacheType = row.cacheType;
-        this.visible.visitTopItem = true; //模态框显示
+        this.visible.visitSetKey = true; //模态框显示
         this.setKeyTitle = "浏览:ItemSet"; //模态框名标题
         this.genre = 0; //清空重置都不显示
         this.$refs['setKeyruleForm'].resetFields(); //重置下表单验证
@@ -431,6 +434,7 @@
         }
       },
       topItemvisit(row) { //setKey的游览-----------------------------------ok
+        console.log(row)
         this.topItemruleForm = row; //付过去
         this.visible.visitTopItem = true;
         this.topItemTitles = "浏览:TopItem";
@@ -438,7 +442,7 @@
         this.$refs['topItemTableData'].resetFields();
       },
       topItemhandleClick(row) { //setKey的修改
-        this.topItemruleForm = Object.assign({}, row);
+        this.topItemruleForms = Object.assign({}, row);
         this.topItembackupsruleForm = Object.assign({}, row);
         this.genre = 2;
         this.visible.topItemdialogs = true;
@@ -467,6 +471,9 @@
           if (data.subItems) {
             var datas = Object.assign({}, data); //赋值
             this.SubItemTree = datas.subItems;
+            this.$nextTick(function () {
+              this.particularsFormchecked(); //每次更新了数据，触发这个函数即可。
+            });
           } else {
             this.SubItemTree = [];
           }
@@ -585,7 +592,7 @@
 
   .el-col-12,
     {
-    height: 450px;
+    height: 50%;
     overflow: scroll;
     padding: 10px 0 10px 10px;
     &>h2 {
@@ -595,14 +602,24 @@
 
   .el-col-13,
   .el-col-11 {
-    height: 390px;
+    max-height: 390px;
     overflow: scroll;
     padding: 10px 0 10px 10px;
     &>h2 {
       font-size: 16px;
     }
   }
-
+// @media screen and (min-height:1050px) and (max-height:1200px){
+//   .el-col-13,
+//   .el-col-11 {
+//     max-height: 490px;
+//     overflow: scroll;
+//     padding: 10px 0 10px 10px;
+//     &>h2 {
+//       font-size: 16px;
+//     }
+//   }
+// }
   .custom-tree-node {
     flex: 1;
     display: flex;

@@ -1,24 +1,24 @@
 <template>
   <el-dialog :title="setKeyTitle" :visible.sync="visible.visitSetKey" width="30%" :before-close="handleClose">
-    <el-form :model="setKeyruleForm" :rules="setKeyrules" ref="setKeyruleForm" label-width="130px" class="demo-ruleForm">
-      <el-form-item label="ItemSet Key" prop="setKey">
-        <el-input v-model="setKeyruleForm.setKey"  :disabled="true" size="small" placeholder="请输入Ket Key"></el-input>
+    <el-form :model="setKeyruleForm" :rules="setKeyrules" ref="setKeyruleForm" label-width="130px" class="demo-ruleForm form">
+      <el-form-item label="ItemSet Key :" prop="setKey">
+        <span>{{setKeyruleForm.setKey}}</span>
       </el-form-item>
-      <el-form-item label="状态" prop="setStatus">
-        <el-select v-model="setKeyruleForm.setStatus" :disabled="true" placeholder="请选择状态" size="small">
-          <el-option v-for="item in setStatusList"   :key="item.key" :label="item.title" :value="item.key"></el-option>
-        </el-select>
+      <el-form-item label="状态 :" prop="setStatus">
+         <div v-for="item in setStatusList">
+          <span v-if="'TE:bdd_item_set_status/'+setKeyruleForm.setStatus==item.path">{{item.titlePath}}</span>
+        </div>
       </el-form-item>
-      <el-form-item label="缓存类型" prop="cacheType">
-        <el-select v-model="setKeyruleForm.cacheType" :disabled="true"  placeholder="请选择缓存类型" size="small">
-          <el-option v-for="item in cacheTypeList"  :key="item.key" :label="item.title" :value="item.key"></el-option>
-        </el-select>
+      <el-form-item label="缓存类型 :" prop="cacheType">
+        <div v-for="item in cacheTypeList">
+          <span v-if="'TE:bdd_item_cache_type/'+setKeyruleForm.cacheType==item.path">{{item.titlePath}}</span>
+        </div>
       </el-form-item> 
-      <el-form-item label="标题" prop="setTitle">
-        <el-input v-model="setKeyruleForm.setTitle"  :disabled="true" size="small" placeholder="请输入标题"></el-input>
+      <el-form-item label="标题 :" prop="setTitle">
+        <span>{{setKeyruleForm.setTitle}}</span>
       </el-form-item>
-      <el-form-item label="备注" style="margin-top:20px">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}"  :disabled="true" placeholder="请输入备注内容" v-model="setKeyruleForm.remark"></el-input>
+      <el-form-item label="备注 :" style="margin-top:20px">
+        <span>{{setKeyruleForm.remark}}</span>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -74,3 +74,13 @@
   }
 
 </script>
+<style lang="scss" scoped>
+.form{
+    span{
+     display: block;
+      border-bottom: 1px solid #dddddd;
+       height: 35px;
+    }
+  }
+
+</style>

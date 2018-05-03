@@ -8,7 +8,7 @@
         <el-input v-model="setKeyruleForm.title" size="small" placeholder="请输入标题"></el-input>
       </el-form-item>
       <el-form-item label="描述" style="margin-top:20px">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入描述内容" v-model="setKeyruleForm.description"></el-input>
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入描述内容" v-model="setKeyruleForm.desc"></el-input>
       </el-form-item>
       <el-form-item label="附属值1" style="margin-top:20px">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入附属值1内容" v-model="setKeyruleForm.v1"></el-input>

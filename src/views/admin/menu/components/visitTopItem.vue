@@ -1,14 +1,14 @@
 <template>
   <el-dialog :title="setKeyTitle" :visible.sync="visible.visitTopItem" width="30%" :before-close="handleClose">
-    <el-form :model="setKeyruleForm" :rules="setKeyrules" ref="setKeyruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="Top Item" prop="itemKey">
-        <el-input v-model="setKeyruleForm.itemKey" :disabled="true" size="small" placeholder="请输入看ket Key"></el-input>
+    <el-form :model="setKeyruleForm" :rules="setKeyrules" ref="setKeyruleForm" label-width="100px" class="demo-ruleForm form">
+      <el-form-item label="Top Item :" prop="itemKey">
+        <span>{{setKeyruleForm.itemKey}}</span>
       </el-form-item>
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="setKeyruleForm.title" :disabled="true" size="small" placeholder="请输入标题"></el-input>
+      <el-form-item label="标题 :" prop="title">
+        <span>{{setKeyruleForm.title}}</span>
       </el-form-item>
-      <el-form-item label="说明" style="margin-top:20px">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :disabled="true" placeholder="请输入说明内容" v-model="setKeyruleForm.remark"></el-input>
+      <el-form-item label="说明 :" style="margin-top:20px">
+        <span>{{setKeyruleForm.description}}</span>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -48,3 +48,13 @@
   }
 
 </script>
+<style lang="scss" scoped>
+.form{
+    span{
+     display: block;
+      border-bottom: 1px solid #dddddd;
+       height: 35px;
+    }
+  }
+
+</style>

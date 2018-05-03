@@ -17,7 +17,7 @@
                 <el-col :span="6">
                   <el-form-item label="权限名:">
                     <el-input v-model="seachFrom.auName" size="small" placeholder="请输入权限名"></el-input>
-                  </el-form-item> 
+                  </el-form-item>
                 </el-col>
                 <el-col :span="5" :offset="1">
                   <el-form-item label="局部Key:">
@@ -45,7 +45,7 @@
               <transition name="el-zoom-in-top">
                 <el-form-item style="margin:0 0 0 -70px" v-show="condition==true">
                   <el-col :span="6">
-                   <el-form-item label="权限类别:">
+                    <el-form-item label="权限类别:">
                       <el-cascader change-on-select :props="sectioprops" :options="sectionLists" v-model="seachFrom.auTypeDdb" size="small" style="width:100%"></el-cascader>
                     </el-form-item>
                   </el-col>
@@ -74,7 +74,7 @@
             </el-tree>
           </div>
         </el-col>
-        <el-dialog :title="dialogFormVisibleTitle" :visible.sync="dialogFormVisible" width="42%">
+        <el-dialog :title="dialogFormVisibleTitle" :visible.sync="dialogFormVisible" width="42%" @close="cancel('dialogForm')">
           <el-form :model="dialogForm" :rules="rules" label-width="100px" ref="dialogForm">
             <el-form-item label="权限点类别" prop="auTypeDdb">
               <el-cascader change-on-select :props="sectioprops" :options="sectionLists" v-model="dialogForm.auTypeDdb" size="small" style="width:32.7%"></el-cascader>
@@ -84,8 +84,8 @@
             </el-form-item>
             <el-form-item label="权限名" prop="auName">
               <el-input v-model="dialogForm.auName" placeholder="请输入权限名" size="small" style="width:32.7%"></el-input>
-            </el-form-item >
-             <el-form-item label="说明">
+            </el-form-item>
+            <el-form-item label="说明" prop="auDesc">
               <el-input type="textarea" style="margin-top:5px;" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入说明内容" v-model="dialogForm.auDesc"></el-input>
             </el-form-item>
           </el-form>
@@ -117,7 +117,12 @@
       return {
         condition: true, //展开收起状态
         seachFrom: {}, //所搜对象
-        dialogForm: {}, //模态框表单
+        dialogForm: {
+          auTypeDdb: [],
+          auKey: "",
+          auName: "",
+          auDesc: ""
+        }, //模态框表单
         messageForm: {}, //详细内容对象
         rules: {
           auTypeDdb: [{required: true,trigger: 'change',validator: select}],
@@ -133,13 +138,13 @@
           children: 'subItems',
           label: 'auKey'
         },
-        sectioprops:{
+        sectioprops: {
           children: 'subItems',
           label: 'title',
-          value:'key'
+          value: 'key'
         },
-        green:1,
-        standbyFrom:{},//备用表单重置时候使用
+        green: 1,
+        standbyFrom: {}, //备用表单重置时候使用
       };
     },
     created() {
@@ -159,7 +164,7 @@
         this.condition = !this.condition
       },
       search() { //查询------------------------------------ok
-       this.getList()
+        this.getList()
       },
       nodeClick(node, data) { //行点击-----------------------------ok
         this.messageForm = node;
@@ -167,11 +172,11 @@
       getList() { //请求列表数据-----------------------------------ok
         this.listLoading = true;
         const ruleForm = Object.assign({}, this.seachFrom)
-        te.crud.querySinglePage("sysAdmin_urm_paginateAuthority",data=>{//列表接口
-          this.dataTree=data.currentPageData;
-        },ruleForm)
-        te.bdd.queryItem('TE:urm_authority_type',data=>{//下拉框列表
-          this.sectionLists=data.subItems;
+        te.crud.querySinglePage("sysAdmin_urm_paginateAuthority", data => { //列表接口
+          this.dataTree = data.currentPageData;
+        }, ruleForm)
+        te.bdd.queryItem('TE:urm_authority_type', data => { //下拉框列表
+          this.sectionLists = data.subItems;
         });
       },
       submitForm(formName) { //提交新增表单
@@ -188,17 +193,18 @@
           }
         });
       },
-      amend(node, data){//修改权限点
-        console.log(data)
-        this.dialogFormVisible = true;//模态框显示
-        this.green=2;//重置按钮显示
+      amend(node, data) { //修改权限点
+        this.dialogFormVisible = true; //模态框显示
+        this.green = 2; //重置按钮显示
         this.dialogFormVisibleTitle = "修改:权限点";
-        this.dialogForm=Object.assign({}, data);//模态框表单
-        this.dialogForm.auTypeDdb=this.dialogForm.auTypeDdb.split();
-        this.standbyFrom=Object.assign({}, data);//备用表单
-        this.standbyFrom.auTypeDdb=this.standbyFrom.auTypeDdb.split();
+        this.$nextTick(function () {
+          this.dialogForm = Object.assign({}, data); //模态框表单
+          this.dialogForm.auTypeDdb = this.dialogForm.auTypeDdb.split();
+          this.standbyFrom = Object.assign({}, data); //备用表单
+          this.standbyFrom.auTypeDdb = this.standbyFrom.auTypeDdb.split();
+        });
       },
-      remove(node, data){//删除权限点
+      remove(node, data) { //删除权限点
         console.log(node, data)
         this.$confirm('此操作将删除员工, 是否继续?', '提示', {
           type: 'warning'
@@ -209,16 +215,19 @@
         });
       },
       addNews(dialogForm) { //点击新增的时候
-        this.dialogFormVisible = true;//模态框显示
-        this.green=1;//清空按钮显示
-        this.$refs[dialogForm].resetFields();//清除表单
         this.dialogFormVisibleTitle = "新增:权限点";
+        this.dialogFormVisible = true; //模态框显示
+        this.green = 1; //清空按钮显示
+        this.$refs[dialogForm].resetFields(); //清除表单
       },
-      cancel(dialogForm){//取消
-        this.$refs[dialogForm].resetFields();
+      cancel(formName) { //取消
+        this.$refs[formName].resetFields();
+        this.$nextTick(function () {
+          this.dialogFormVisible = false; //模态框显示
+        });
       },
-      reset(dialogForm){//重置表单
-        this.dialogForm=Object.assign({},this.standbyFrom)
+      reset(dialogForm) { //重置表单
+        this.dialogForm = Object.assign({}, this.standbyFrom)
       },
       resetForm(formName) { //清空新增表单
         this.$refs[formName].resetFields();
@@ -255,32 +264,38 @@
       display: inline-block;
     }
   }
-  .treeTltle{
+
+  .treeTltle {
     // background: red;
     margin-top: 40px;
     overflow: hidden;
-    &>.item{
+    &>.item {
       float: left;
       display: inline-block;
-      width:270px;
+      width: 270px;
       text-align: center;
     }
   }
-  .aut:nth-child(1){
+
+  .aut:nth-child(1) {
     width: 220px;
   }
-  .aut:nth-child(2){
+
+  .aut:nth-child(2) {
     width: 300px;
   }
-  .aut:nth-child(3){
+
+  .aut:nth-child(3) {
     width: 270px;
   }
-  .aut:nth-child(4){
+
+  .aut:nth-child(4) {
     width: 250px;
   }
-  .aut{
-    display:inline-block;
-    text-align:center;
+
+  .aut {
+    display: inline-block;
+    text-align: center;
   }
 
 </style>
