@@ -41,7 +41,9 @@
         ruleForm:{}
       }
     },
-    created() {},
+    created() {
+
+    },
     methods: {
       handleClose() {
         this.visible.topItemdialogs = false
@@ -82,7 +84,7 @@
           });
         }
       },
-       resetForm(formName) {
+      resetForm(formName) {
         this.$refs[formName].resetFields();
       },
        replacement(formName) { //重置

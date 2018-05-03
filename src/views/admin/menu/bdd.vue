@@ -35,7 +35,7 @@
             </el-table-column>
             <el-table-column label="操作" align="center">
               <template slot-scope="scope">
-                <el-button @click="setKeyvisit(scope.row)" title="游览" type="text" icon="el-icon-view" style="color:#e67f05"></el-button>
+                <el-button @click="setKeyvisit(scope.row)" title="浏览" type="text" icon="el-icon-view" style="color:#e67f05"></el-button>
                 <el-button @click="setKeyhandleClick(scope.row)" title="修改" type="text" icon="el-icon-edit" style="color:#e67f05"></el-button>
                 <el-button @click="setKeydeleteRow(scope.row)" title="删除" type="text" icon="el-icon-delete" style="color:#b20000"></el-button>
               </template>
@@ -47,6 +47,8 @@
           <!-- set-key的模态框 -->
           <set-keydialogs :genre="genre" @successCBK="getSetLists" :backupsruleForm="backupsruleForm" :setKeyruleForm="setKeyruleForm"
             :setKeyTitle='setKeyTitle' :visible='visible'></set-keydialogs>
+          <visit-setKey :genre="genre" @successCBK="getSetLists" :backupsruleForm="backupsruleForm" :setKeyruleForm="setKeyruleForm"
+            :setKeyTitle='setKeyTitle' :visible='visible'></visit-setKey>
         </el-col>
         <!-- --------------------------------------------------------------------TopItem管理----------------------------------------------------------------- -->
         <el-col :span="12" style="border-left:5px solid #eeeeee;border-bottom:10px solid #eeeeee;">
@@ -75,7 +77,7 @@
             </el-table-column>
             <el-table-column label="操作" align="center">
               <template slot-scope="scope">
-                <el-button @click="topItemvisit(scope.row)" title="游览" type="text" icon="el-icon-view" style="color:#e67f05"></el-button>
+                <el-button @click="topItemvisit(scope.row)" title="浏览" type="text" icon="el-icon-view" style="color:#e67f05"></el-button>
                 <el-button @click="topItemhandleClick(scope.row)" title="修改" type="text" icon="el-icon-edit" style="color:#e67f05"></el-button>
                 <el-button @click="topItemdeleteRow(scope.row)" title="删除" type="text" icon="el-icon-delete" style="color:#b20000"></el-button>
               </template>
@@ -85,8 +87,10 @@
           <PageItem :handleSizeChange="topItemhandleSizeChange" :handleCurrentChange="topItemhandleCurrentChange" :listQuery="topItemlistQuery"
             :total="topItemTotal"></PageItem>
           <!-- set-key的模态框 -->
-          <top-itemdialogs :genre="genre" @successCBK="getTopItemList" :setKeyruleForm="topItemruleForm" :setKeyTitle='topItemTitle'
+          <top-itemdialogs :genre="genre" @successCBK="getTopItemList" :setKeyruleForm="topItemruleForm" :setKeyTitle='topItemTitles'
             :visible='visible' :teBddItemSetId="teBddItemsetKey" :topItembackupsruleForm="topItembackupsruleForm"></top-itemdialogs>
+          <visitTopItem :genre="genre" @successCBK="getTopItemList" :setKeyruleForm="topItemruleForm" :setKeyTitle='topItemTitles'
+            :visible='visible' :teBddItemSetId="teBddItemsetKey" :topItembackupsruleForm="topItembackupsruleForm"></visitTopItem>
         </el-col>
       </el-row>
       <el-row>
@@ -142,7 +146,7 @@
 
 <script>
   import {itemSetLists,treeLists} from "@/api/bdd";
-  import { setKeydialogs,topItemdialogs, subItem,subItemParticulars,addNewSubitem} from "./components";
+  import { setKeydialogs,topItemdialogs, subItem,subItemParticulars,addNewSubitem,visitSetKey,visitTopItem } from "./components";
   import { PageItem ,bddSetStatus} from '@/views/view-component'
   export default {
     name: "bdd",
@@ -160,7 +164,9 @@
           topItemdialogs: false, //topItemy模态框里
           subItemdialog: false,
           shiftSubItemdialog: false, //移动模态框
-          addSubItemdialog: false //新增SubItem
+          addSubItemdialog: false, //新增SubItem
+          visitSetKey:false,//游览setkey模态框
+          visitTopItem:false
         },
         supplierTable:{},//表格用来默认选中亮的
         topItemsupplierTable:{},//表格用来默认选中亮的
@@ -178,7 +184,7 @@
         topItemTotal: 0, //topItem的总页数
         topItemPageSize: 0, //一页多少条
         topItemcurrentPage: 1, //当前第几页
-        topItemTitle: "", //topItem模态框里的Title
+        topItemTitles: "", //topItem模态框里的Title
         topItemruleForm: {},
         topItembackupsruleForm: {}, //topItem重置的备份表单
         SubItemTree: [], //-------------------------------------------------SubItem管理
@@ -218,7 +224,9 @@
       subItem,
       subItemParticulars,
       bddSetStatus,
-      addNewSubitem
+      addNewSubitem,
+      visitSetKey,
+      visitTopItem
     },
     created() {
       this.getSetLists();
@@ -250,7 +258,7 @@
         this.$refs.supplierTable.setCurrentRow(this.setKeyTableData[0]);
       },
       setKeySearch() { //setKey的搜索按钮---------------------------------------------OK
-        const zz = /^[a-zA-Z0-9_-]+$/
+        const zz = /^[a-zA-Z0-9_\s]*$/
         if (!zz.test(this.setKey)) {
           this.setKey = "";
           this.$message.warning('不允许特殊字符进行搜索');
@@ -299,8 +307,8 @@
         this.setKeyruleForm = Object.assign({}, row); //赋值
         this.setKeyruleForm.setStatus = row.setStatus;
         this.setKeyruleForm.cacheType = row.cacheType;
-        this.visible.setKeydialog = true; //模态框显示
-        this.setKeyTitle = "游览:ItemSet"; //模态框名标题
+        this.visible.visitTopItem = true; //模态框显示
+        this.setKeyTitle = "浏览:ItemSet"; //模态框名标题
         this.genre = 0; //清空重置都不显示
         this.$refs['setKeyruleForm'].resetFields(); //重置下表单验证
       },
@@ -393,7 +401,7 @@
         }, null, null);
       },
       topItemSearch() { //搜索------------------------------------------------------ok
-        const zz = /^[a-zA-Z0-9_-]+$/
+        const zz = /^[a-zA-Z0-9_\s]*$/
         if (!zz.test(this.topItem)) {
           this.topItem = "";
           this.$message.warning('不允许特殊字符进行搜索');
@@ -415,7 +423,7 @@
       topItemAdd() { //新增--------------------------------------------ok
         if (this.teBddItemSetId) {
           this.visible.topItemdialogs = true;
-          this.topItemTitle = "新增:TopItem";
+          this.topItemTitles = "新增:TopItem";
           this.genre = 1;
           this.$refs['topItemTableData'].resetFields();
         } else {
@@ -424,8 +432,8 @@
       },
       topItemvisit(row) { //setKey的游览-----------------------------------ok
         this.topItemruleForm = row; //付过去
-        this.visible.topItemdialogs = true;
-        this.topItemTitle = "游览:TopItem";
+        this.visible.visitTopItem = true;
+        this.topItemTitles = "浏览:TopItem";
         this.genre = 0;
         this.$refs['topItemTableData'].resetFields();
       },
@@ -434,7 +442,7 @@
         this.topItembackupsruleForm = Object.assign({}, row);
         this.genre = 2;
         this.visible.topItemdialogs = true;
-        this.topItemTitle = "修改:TopItem";
+        this.topItemTitles = "修改:TopItem";
         this.$refs['topItemTableData'].resetFields();
       },
       topItemdeleteRow(row) { //setKey的删除----------------------------ok
@@ -459,9 +467,6 @@
           if (data.subItems) {
             var datas = Object.assign({}, data); //赋值
             this.SubItemTree = datas.subItems;
-            this.$nextTick(function () {
-              this.particularsFormchecked(); //每次更新了数据，触发这个函数即可。
-            });
           } else {
             this.SubItemTree = [];
           }
@@ -469,15 +474,16 @@
       },
       particularsFormchecked() { //默认触发
         this.nodeClick(this.SubItemTree[0]);
-        // console.log(this.SubItemTree[0])
         this.$refs.SubItemTable.getCheckedKeys(this.SubItemTable[1]);
-        // console.log(this.SubItemTree[0]) 
       },
       gettreeLists() { //---------------SubItem---------------------------------ok
         te.bdd.loadData('' + this.TopItemPath + '', data => { //获取默认列表
           if (data[0].subItems) {
             var datas = Object.assign({}, data); //赋值
             this.SubItemTree = datas[0].subItems;
+             this.$nextTick(function () {
+              this.particularsFormchecked(); //每次更新了数据，触发这个函数即可。
+            });
           } else {
             this.SubItemTree = [];
           }

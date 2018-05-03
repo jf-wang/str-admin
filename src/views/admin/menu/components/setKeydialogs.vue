@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="setKeyTitle" :visible.sync="visible.setKeydialog" width="30%" :before-close="handleClose">
-    <el-form :model="setKeyruleForm" :rules="setKeyrules" ref="setKeyruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="Set Key" prop="setKey">
+    <el-form :model="setKeyruleForm" :rules="setKeyrules" ref="setKeyruleForm" label-width="130px" class="demo-ruleForm">
+      <el-form-item label="ItemSet Key" prop="setKey">
         <el-input v-model="setKeyruleForm.setKey" size="small" placeholder="请输入Ket Key"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="setStatus">
@@ -13,7 +13,7 @@
         <el-select v-model="setKeyruleForm.cacheType" placeholder="请选择缓存类型" size="small">
           <el-option v-for="item in cacheTypeList" :key="item.key" :label="item.title" :value="item.key"></el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> 
       <el-form-item label="标题" prop="setTitle">
         <el-input v-model="setKeyruleForm.setTitle" size="small" placeholder="请输入标题"></el-input>
       </el-form-item>
@@ -25,7 +25,7 @@
       <el-button type="info" @click.native="handleClose">取 消</el-button>
       <el-button type="info" v-if="genre==1" @click.native="resetForm('setKeyruleForm')">清 空</el-button>
       <el-button type="info" v-if="genre==2" @click.native="replacement('setKeyruleForm')">重 置</el-button>
-      <el-button type="danger" @click.native="setKeysubmitForm('setKeyruleForm')">确 定</el-button>
+      <el-button type="danger"  @click.native="setKeysubmitForm('setKeyruleForm')">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -39,6 +39,8 @@
           callback(new Error('请输入Set Key'));
         } else if (!zz.test(value)) {
           callback(new Error('只能输入数字大小写字母'));
+        } else if (value.length>300) {
+          callback(new Error('限制在1-300字符之间'));
         } else {
           callback();
         }
@@ -63,6 +65,7 @@
       handleClose() {
         this.visible.setKeydialog = false
         this.$refs['setKeyruleForm'].resetFields();
+        
       },
       setKeysubmitForm(formName) {
         if (this.setKeyTitle == "游览:ItemSet") { //如果是游览，点击确定的时候直接关闭模态框

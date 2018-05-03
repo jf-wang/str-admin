@@ -60,7 +60,9 @@
           callback(new Error('请输入Set Key'));
         } else if (!zz.test(value)) {
           callback(new Error('只能输入数字大小写字母'));
-        } else {
+        } else if (value.length>300) {
+          callback(new Error('限制在1-300字符之间'));
+        }  else {
           callback();
         }
       };

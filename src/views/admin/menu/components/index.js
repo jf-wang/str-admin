@@ -1,6 +1,10 @@
 export { default as setKeydialogs } from './setKeydialogs'//Set Key
 
-export { default as topItemdialogs } from './topItemdialogs'//游览:TopItem
+export { default as visitSetKey } from './visitSetKey'//游览setkey模态框
+
+export { default as topItemdialogs } from './topItemdialogs'//编辑:TopItem
+
+export { default as visitTopItem } from './visitTopItem'//游览:TopItem
 
 export { default as subItem } from './subItem'//修改，查看顶层SubItem
 
