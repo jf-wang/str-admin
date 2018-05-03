@@ -1,5 +1,5 @@
 <template>
-  <div id="messageForm">
+  <div id="userRoleMessag">
     <el-form :model="logo" label-width="100px" ref="logo" class="form">
       <el-form-item label="角色类别:" style="margin-bottom:0">
         <span>{{logo.name}}</span>
@@ -20,7 +20,7 @@
 
 <script>
   export default {
-    name: "messageForm",
+    name: "userRoleMessag",
     data() {
       return {
        

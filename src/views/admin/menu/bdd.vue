@@ -95,10 +95,10 @@
           <div style="overflow:hidden">
             <el-button type="text" style="float:right" size="mini" title="新增顶层SubItem" icon="el-icon-circle-plus-outline" @click="addNews">新增顶层SubItem</el-button>
           </div>
-          <el-tree :data="SubItemTree" show-checkbox ref="SubItemTable" :props="SubItemTreeprops" :label="SubItemTree.title" @node-click="nodeClick" node-key="key" default-expand-all
+          <el-tree :data="SubItemTree" ref="SubItemTable" :props="SubItemTreeprops" :label="SubItemTree.title" @node-click="nodeClick" node-key="key" default-expand-all
             :expand-on-click-node="false"  highlight-current >
-            <span class="custom-tree-node" slot-scope="{ node, data }">
-              <span>{{ node.label }}</span>
+            <span class="custom-tree-node" slot-scope="{ node, data }">  
+              <span>{{ node.label }}</span>  
               <span>
                 <el-button type="text" style="color:#e67f05" size="mini" title="修改" icon="el-icon-edit" @click="amend(node, data)"></el-button>
                 <el-button type="text" style="color:#b20000" size="mini" title="删除" icon="el-icon-delete" @click="remove(node, data)"></el-button>
@@ -469,9 +469,9 @@
       },
       particularsFormchecked() { //默认触发
         this.nodeClick(this.SubItemTree[0]);
-        console.log(this.SubItemTree[0])
+        // console.log(this.SubItemTree[0])
         this.$refs.SubItemTable.getCheckedKeys(this.SubItemTable[1]);
-        console.log(this.SubItemTree[0])
+        // console.log(this.SubItemTree[0]) 
       },
       gettreeLists() { //---------------SubItem---------------------------------ok
         te.bdd.loadData('' + this.TopItemPath + '', data => { //获取默认列表

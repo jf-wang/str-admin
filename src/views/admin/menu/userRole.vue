@@ -81,7 +81,7 @@
         </el-dialog>
         <el-col :span="8">
           <div class="search_right">
-            <messag-form :logo="messageForm"></messag-form>
+            <userRole-messag :logo="messageForm"></userRole-messag>
           </div>
         </el-col>
       </el-row>
@@ -92,7 +92,7 @@
 <script>
   import {getrololists} from '@/api/admin'
   import {name,loginName,select,phone} from '@/views/admin/role/roleFrom'
-  import messagForm from "./messagForm";
+  import {userRoleMessag} from "./components";
   export default {
     name: "userRole",
     data() {
@@ -131,7 +131,7 @@
 
     },
     components: {
-      messagForm
+      userRoleMessag
     },
     props: [],
     methods: {

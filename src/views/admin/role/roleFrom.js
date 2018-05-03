@@ -48,3 +48,21 @@ export function card(rule, value, callback) { // 身份证号码
     callback()
   }
 }
+export function auKey(rule, value, callback) { // 姓名
+  const regFormat = /^[a-zA-Z\d]+$/
+   if (!value) {
+    callback(new Error('请输入局部Key'))
+   }else if (!regFormat.test(value)) {
+    callback(new Error('只允许中文大小写英文以及下划线'))
+  } else {
+    callback()
+  }
+}
+export function auName(rule, value, callback) { // 姓名
+  const regFormat = /^[\u4E00-\u9FA5A-Za-z ]+$/ // 正确 姓名
+   if (!value) {
+    callback(new Error('请输入权限名'))
+   } else {
+    callback()
+  }
+}

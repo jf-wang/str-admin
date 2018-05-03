@@ -50,7 +50,8 @@
     };
 
     te.constants = {
-        CHECK_RESULT_FAIL_FEEDBACK_FLAG: "__msgSecurity"
+        CHECK_RESULT_FAIL_FEEDBACK_FLAG: "__msgSecurity",
+        MAX_INT: 2147483647
     };
 
     /**
@@ -1039,6 +1040,19 @@
         }
     };
 
+    /**
+     * 单页查询（不分页查询），视为分页查询的特例。
+     * @param {string} pageId 分页句柄
+     * @param {function(Object):void} action 分页数据返回后的回调函数，参数为Object实例，包含属性：rowCount（总行数）、beginRow（起始行编号）、
+     * endRow（结束行编号）、currentPageData（当前页的数据集）、params（实际执行的查询参数）。
+     * @param {Object} [params=null] 查询参数。
+     * @param {string} [sortIndicator] 排序字串，格式：&lt;字段名1&gt;,&lt;a/d&gt;[;&lt;字段名2&gt;,&lt;a/d&gt;[...[;&lt;字段名n&gt;,&lt;a/d&gt;]]]。
+     */
+    te.pagination.querySinglePage = function (pageId, action, params, sortIndicator) {
+        te.pagination.queryPage(pageId, action, params, 1, sortIndicator, te.constants.MAX_INT);
+    };
+
+
 //------------------------------ ATTACHMENT ------------------------------
     te.att = {};
 
@@ -1106,16 +1120,34 @@
      * @type {{: string}}
      */
     te.crud.actionKeys = {
+        sysAdmin_bdd_paginateItemSet: '/te/bdd/paginateItemSet',
         sysAdmin_bdd_createItemSet: '/te/bdd/createItemSet',
         sysAdmin_bdd_updateItemSet: '/te/bdd/updateItemSet',
         sysAdmin_bdd_deleteItemSet: '/te/bdd/deleteItemSet',
+
         sysAdmin_bdd_createTopItem: '/te/bdd/createTopItem',
         sysAdmin_bdd_updateTopItem: '/te/bdd/updateTopItem',
         sysAdmin_bdd_deleteTopItem: '/te/bdd/deleteTopItem',
+
         sysAdmin_bdd_createSubItem: '/te/bdd/createSubItem',
         sysAdmin_bdd_updateSubItem: '/te/bdd/updateSubItem',
         sysAdmin_bdd_deleteSubItem: '/te/bdd/deleteSubItem',
         sysAdmin_bdd_moveSubItem: '/te/bdd/moveSubItem',
+
+        sysAdmin_urm_paginateAuthority: '/te/urm/paginateAuthority',
+        sysAdmin_urm_paginateAuthorityOfRole: '/te/urm/paginateAuthorityOfRole',
+        sysAdmin_urm_paginateUnspecifiedAuthorityOfRole: '/te/urm/paginateUnspecifiedAuthorityOfRole',
+        sysAdmin_urm_createAuthority: '/te/urm/createAuthority',
+        sysAdmin_urm_updateAuthority: '/te/urm/updateAuthority',
+        sysAdmin_urm_deleteAuthority: '/te/urm/deleteAuthority',
+
+        sysAdmin_urm_paginateRole: '/te/urm/paginateRole',
+        sysAdmin_urm_createRole: '/te/urm/createRole',
+        sysAdmin_urm_updateRole: '/te/urm/updateRole',
+        sysAdmin_urm_deleteRole: '/te/urm/deleteRole',
+        sysAdmin_urm_assignAuthorityToRole: '/te/urm/assignAuthorityToRole',
+        sysAdmin_urm_removeAuthorityFromRole: '/te/urm/removeAuthorityFromRole',
+
         xxx: '/xx/xx/xxx'
     };
 
@@ -1137,8 +1169,8 @@
                             if (keyStr) {
                                 var keyMaps = keyStr.split(";");
                                 for (var j = 0; j < keyMaps.length; j++) {
-                                    var keyValue = keyMaps[j].split(",");
-                                    te.crud.actionKeys[keyValue[0]] = keyValue[1];
+                                    var keyValue = keyMaps[j].trim().split(",");
+                                    if (keyValue.length === 2) te.crud.actionKeys[keyValue[0]] = keyValue[1];
                                 }
                             }
                         }
@@ -1198,6 +1230,49 @@
                 },
                 multipart, action4);
         }
+    };
+
+    /**
+     * 分页查询
+     * @param actionKey 分页查询业务逻辑Key
+     * @param {function(Object):void} action 分页数据返回后的回调函数，参数为Object实例，包含属性：
+     * pageCapacity（int，页面容量）、pageTotal（总页数）、pageNumber（页码）、rowCount（总行数）、beginRow（起始行编号）、
+     * endRow（结束行编号）、currentPageData（当前页的数据集）、params（实际执行的查询参数）。
+     * @param {Object} [params=null] 查询参数。
+     * @param {int} [pageNumber=1] 页码，默认值由te.pagination.default.pageNumber设定。
+     * @param {string} [sortIndicator] 排序字串，格式：&lt;字段名1&gt;,&lt;a/d&gt;[;&lt;字段名2&gt;,&lt;a/d&gt;[...[;&lt;字段名n&gt;,&lt;a/d&gt;]]]。
+     * @param {int} [pageCapacity=30] 页容量，默认值由te.pagination.default.pageCapacity设定。
+     */
+    te.crud.queryPage = function (actionKey, action, params, pageNumber,
+                                  sortIndicator, pageCapacity) {
+        pageNumber = te.nvl(pageNumber, te.pagination.default.pageNumber);
+        pageCapacity = te.nvl(pageCapacity, te.pagination.default.pageCapacity);
+        if (te.notNOU(action) && te.isFinite(pageNumber) && te.isFinite(pageCapacity)) {
+
+            te.crud.do(
+                actionKey,
+                {
+                    params: JSON.stringify(params),
+                    sortIndicator: sortIndicator,
+                    pageCapacity: pageCapacity,
+                    pageNumber: pageNumber
+                },
+                null,
+                null,
+                action);
+        }
+    };
+
+    /**
+     * 单页查询（不分页查询），视为分页查询的特例。
+     * @param actionKey 分页查询业务逻辑Key
+     * @param {function(Object):void} action 分页数据返回后的回调函数，参数为Object实例，包含属性：rowCount（总行数）、beginRow（起始行编号）、
+     * endRow（结束行编号）、currentPageData（当前页的数据集）、params（实际执行的查询参数）。
+     * @param {Object} [params=null] 查询参数。
+     * @param {string} [sortIndicator] 排序字串，格式：&lt;字段名1&gt;,&lt;a/d&gt;[;&lt;字段名2&gt;,&lt;a/d&gt;[...[;&lt;字段名n&gt;,&lt;a/d&gt;]]]。
+     */
+    te.crud.querySinglePage = function (actionKey, action, params, sortIndicator) {
+        te.crud.queryPage(actionKey, action, params, 1, sortIndicator, te.constants.MAX_INT);
     };
 
     /**

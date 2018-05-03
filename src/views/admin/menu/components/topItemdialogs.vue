@@ -2,7 +2,7 @@
   <el-dialog :title="setKeyTitle" :visible.sync="visible.topItemdialogs" width="30%" :before-close="handleClose">
     <el-form :model="setKeyruleForm" :rules="setKeyrules" ref="setKeyruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="Top Item" prop="itemKey">
-        <el-input v-model="setKeyruleForm.itemKey" size="small" placeholder="请输入et Key"></el-input>
+        <el-input v-model="setKeyruleForm.itemKey" size="small" placeholder="请输入看ket Key"></el-input>
       </el-form-item>
       <el-form-item label="标题" prop="title">
         <el-input v-model="setKeyruleForm.title" size="small" placeholder="请输入标题"></el-input>

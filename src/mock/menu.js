@@ -1,8 +1,7 @@
 import {
   baseUrl
 } from '@/config/env'
-const first = [
-  {
+const first = [{
     id: 1,
     label: "事务中心",
     href: '/transactionCenter/messageCenter',
@@ -50,25 +49,33 @@ const first = [
       href: '/admin/menu',
       icon: 'icon-caidanguanli',
       children: [{
-        id: 311,
-        label: "业务选项配置",
-        href: '/admin/serviceOption',
-        icon: 'icon-yonghuguanli',
-        children: []
-      }, {
-        id: 312,
-        label: "角色配置",
-        href: '/admin/userRole',
-        icon: 'icon-jiaoseguanli',
-        children: []
-      },
-      {
-        id: 313,
-        label: "数据字典管理",
-        href: '/admin/bdd',
-        icon: 'icon-caidanguanli',
-        children: []
-      }]
+          id: 311,
+          label: "业务选项配置",
+          href: '/admin/serviceOption',
+          icon: 'icon-yonghuguanli',
+          children: []
+        }, {
+          id: 312,
+          label: "角色配置",
+          href: '/admin/userRole',
+          icon: 'icon-jiaoseguanli',
+          children: []
+        },
+        {
+          id: 313,
+          label: "数据字典管理",
+          href: '/admin/bdd',
+          icon: 'icon-caidanguanli',
+          children: []
+        },
+        {
+          id: 314,
+          label: "权限点管理",
+          href: '/admin/jurisdiction',
+          icon: 'icon-caidanguanli',
+          children: []
+        }
+      ]
     }, {
       id: 32,
       label: "用户管理",
@@ -95,4 +102,3 @@ const second = [
 
 ]
 export const menu = [first, second];
-
