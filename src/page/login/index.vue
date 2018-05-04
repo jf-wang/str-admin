@@ -124,7 +124,7 @@
 
   .login-code-img {
     width: 100px;
-    height: 43px;
+    height: 38px;
     background-color: #eee;
     border: 1px solid #f0f0f0;
     color: #333;

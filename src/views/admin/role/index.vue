@@ -160,7 +160,7 @@
 
 <script>
   import {getrololists,getoptionsLists} from '@/api/admin'
-  import {name,loginName,select,phone} from '@/views/admin/role/roleFrom'
+  import {name,loginName,select,phone} from '@/views/view-component/validationRule'
   import messagForm from "./messagForm";
   export default {
     name: "role",

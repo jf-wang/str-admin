@@ -109,7 +109,7 @@
 
 <script>
   import {getrololists} from '@/api/admin'
-  import {auKey,auName,select} from '@/views/admin/role/roleFrom'
+  import {auKey,auName,select} from '@/views/view-component/validationRule'
   import {jurisdictionMessage} from "./components";
   export default {
     name: "jurisdiction",

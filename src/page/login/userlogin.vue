@@ -1,15 +1,15 @@
 <template>
   <el-form class="login-form" status-icon :rules="loginRules" ref="loginForm" :model="loginForm" label-width="80">
-    <el-form-item prop="username" label="用户:">
+    <el-form-item prop="username" label="用户:" style="margin-top:30px">
       <el-input @keyup.enter.native="handleLogin" v-model="loginForm.username" auto-complete="off" placeholder="请输入用户名" style="width:76%"></el-input>
     </el-form-item>
-    <el-form-item prop="password" label="密码:">
+    <el-form-item prop="password" label="密码:" style="margin-top:30px">
       <el-input @keyup.enter.native="handleLogin" :type="passwordType" v-model="loginForm.password" auto-complete="off" placeholder="请输入密码"
         style="width:76%">
         <i class="el-icon-view el-input__icon" slot="suffix" @click="showPassword"></i>
       </el-input>
     </el-form-item>
-    <el-form-item prop="code">
+    <el-form-item prop="code" style="margin-top:30px">
       <el-row :span="24">
         <el-col :span="10" :offset="4">
           <el-input @keyup.enter.native="handleLogin" :maxlength="code.len" v-model="loginForm.code" auto-complete="off" placeholder="请输入验证码"></el-input>
@@ -23,22 +23,16 @@
         </el-col>
       </el-row>
     </el-form-item>
-    <el-form-item>
+    <el-form-item style="margin-top:30px">
       <el-button type="primary" @click.native.prevent="handleLogin" class="login-submit" style="width:76%;margin-left:54px">登录</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-  import {
-    isvalidUsername
-  } from "@/util/validate";
-  import {
-    randomLenNum
-  } from "@/util/util";
-  import {
-    mapGetters
-  } from "vuex";
+  import {isvalidUsername} from "@/util/validate";
+  import {randomLenNum} from "@/util/util";
+  import {mapGetters} from "vuex";
   export default {
     name: "userlogin",
     data() {

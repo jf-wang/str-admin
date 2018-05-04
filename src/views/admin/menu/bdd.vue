@@ -12,7 +12,7 @@
       <el-row>
         <!-- --------------------------------------------------------------------ItemSet管理----------------------------------------------------------------- -->
         <el-col :span="12" style="border-right:5px solid #eeeeee;border-bottom:10px solid #eeeeee;">
-          <h2>ItemSet管理</h2>
+          <h2><span>ItemSet管理</span></h2>
           <el-row style="margin:10px 0">
             <el-col :span="10">
               Set Key
@@ -52,7 +52,7 @@
         </el-col>
         <!-- --------------------------------------------------------------------TopItem管理----------------------------------------------------------------- -->
         <el-col :span="12" style="border-left:5px solid #eeeeee;border-bottom:10px solid #eeeeee;">
-          <h2>TopItem管理</h2>
+          <h2><span>TopItem管理</span></h2>
           <el-row style="margin:10px 0">
             <el-col :span="8">
               Key
@@ -95,7 +95,7 @@
       </el-row>
       <el-row>
         <el-col :span="13">
-          <h2>SubItem管理</h2>
+          <h2><span>SubItem管理</span></h2>
           <div style="overflow:hidden">
             <el-button type="text" style="float:right" size="mini" title="新增顶层SubItem" icon="el-icon-circle-plus-outline" @click="addNews">新增顶层SubItem</el-button>
           </div>
@@ -136,7 +136,7 @@
           </el-dialog>
         </el-col>
         <el-col :span="11">
-          <h2>SubItem详情</h2>
+          <h2><span>SubItem详情</span></h2>
           <subItem-particulars :logo="particularsForm"></subItem-particulars>
         </el-col>
       </el-row>
@@ -597,6 +597,12 @@
     padding: 10px 0 10px 10px;
     &>h2 {
       font-size: 16px;
+      border-bottom: 1px solid #eeeeee;
+      padding: 4px 5px;
+      &>span{
+        border-bottom: 2px solid #b20000;
+        padding: 3px;
+      }
     }
   }
 
@@ -607,7 +613,16 @@
     padding: 10px 0 10px 10px;
     &>h2 {
       font-size: 16px;
+      border-bottom: 1px solid #eeeeee;
+      padding: 4px 5px;
+      &>span{
+        border-bottom: 2px solid #b20000;
+        padding: 3px;
+      }
     }
+  }
+  .el-col-13{
+    padding-right: 10px;
   }
 // @media screen and (min-height:1050px) and (max-height:1200px){
 //   .el-col-13,

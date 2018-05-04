@@ -165,7 +165,7 @@
 <script>
    import {getoptionsLists} from '@/api/admin'
    import {counselorlists} from '@/api/counselor'
-   import {name,loginName,select,phone} from '@/views/admin/role/roleFrom'
+   import {name,loginName,select,phone} from '@/views/view-component/validationRule'
    import messagForm from "./messagForm";
     const statesOptions = [
       { key: 1, label: '专职' },

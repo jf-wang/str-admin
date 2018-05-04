@@ -2,17 +2,17 @@
   <div id="userRoleMessag">
     <el-form :model="logo" label-width="100px" ref="logo" class="form">
       <el-form-item label="角色类别:" style="margin-bottom:0">
-        <span>{{logo.name}}</span>
+        <span>{{logo.roleTypeDdb}}</span>
       </el-form-item>
      
       <el-form-item label="局部Key:" style="margin-bottom:0">
-        <span>{{logo.specialPane}}</span>
+        <span>{{logo.roleKey}}</span>
       </el-form-item>
       <el-form-item label="角色名:" style="margin-bottom:0">
-        <span>{{logo.phone}}</span>
+        <span>{{logo.roleName}}</span>
       </el-form-item>
       <el-form-item label="说明:" style="margin-bottom:0">
-        <span>{{logo.remark}}</span>
+        <span>{{logo.roleDesc}}</span>
       </el-form-item>
     </el-form>
   </div>
